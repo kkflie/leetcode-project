@@ -1,0 +1,14 @@
+{
+  "name": "leetcode-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "1.two-sum.js",
+  "scripts": {
+    "test": "jest --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

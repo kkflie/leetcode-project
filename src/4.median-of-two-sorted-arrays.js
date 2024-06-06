@@ -25,34 +25,35 @@ var findMedianSortedArrays = function(nums1, nums2) {
   const max = m > n ? m : n
   const min = max === m ? n : m
   let mid = Math.floor((max - min) / 2) + min
+  let max2 = -1
   const even = (max - min) % 2 === 0
-  console.log('mid', mid)
   while (k <= mid) {
     const a1 = nums1[i] 
     const a2 = nums2[j]
     if (a1 === undefined) {
-      console.log('I', a2)
       nums3.push(a2)
+      max2 = j
       j++
     } else if (a2 === undefined) {
-      console.log('II', a1)
       nums3.push(a1)
+      max2 = i
       i++
     } else if (a1 < a2) {
-      console.log('III', a1)
       nums3.push(a1)
+      max2 = i
       i++
     } else {
-      console.log('IV', a2)
       nums3.push(a2)
+      max2 = j
       j++
     }
     k++
   }
-  console.log('nums3', nums3)
   if (even) {
+
     return (nums3[nums3.length - 1] - nums3[nums3.length - 2]) / 2 + nums3[nums3.length - 2]
   }
+  // return nums1[i] > nums2[j] ? nums1[i] : nums2[j]
   return nums3[nums3.length - 1]
 };
 // @lc code=end

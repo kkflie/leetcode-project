@@ -15,71 +15,53 @@
  * @return {string[]}
  */
 var findItinerary = function(tickets) {
-  const res = []
-  const path = []
-  function backTrack(used) {
-    if (path.length >= tickets.length) {
-      const list = path.reduce((pre, arr, index) => {
-        if (index === 0) {
-          pre = pre.concat(arr)
-        } else {
-          pre.push(arr[1])
-        }
-        return pre
-      }, [])
-      res.push(list)
-      return
+  let dic = {}
+  tickets.forEach((e) => {
+    if (dic[e[0]] === undefined) {
+      dic[e[0]] = { [e[1]]: 0 }
     }
-    for (let i = 0; i < tickets.length; i++) {
-      const ticket = tickets[i]
-      if (path.length === 0) {
-        if (ticket[0] !== 'JFK') {
-          continue
-        } else {
-          used[i] = true
-          path.push(ticket)
-          backTrack(used)
-          used[i] = false
-          path.pop()
-        }
-      } else {
-        if (used[i] === true) {
-          continue
-        }
-        const latestAirport = path[path.length - 1][1]
-        const curAirport = ticket[0]
-        if (latestAirport !== curAirport) {
-          continue
-        }
-        used[i] = true
-        path.push(ticket)
-        backTrack(used)
-        used[i] = false
-        path.pop()
-      }
-    } 
-  }
-  backTrack(tickets.map(_ => false))
-  console.log(res)
-  res.sort((a, b) => {
-    const flag = compareOrder(a, b)
-    // console.log('flag', flag, a, b)
-    return flag
+    dic[e[0]][e[1]] = (dic[e[0]][e[1]] || 0) + 1
   })
-  console.log(res)
-  return res[0]
-
-  function compareOrder(a, b) {
-    for (let i = 0; i < a.length; i++) {
-      if (a[i] > b[i]) {
-        return 1
-      } else if (a[i] < b[i]) {
-        return -1
-      } else {
-        continue
+  
+  const res = ['JFK']
+  function backTrack() {
+    if (res.length >= tickets.length + 1) {
+      return true
+    }
+    const target = dic[res[res.length - 1]]
+    if (!target) {
+      return false
+    }
+    const keys = Object.keys(target)
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i]
+      if (target[key] > 0) {
+        target[key]--
+        res.push(key)
+        const flag = backTrack(dic)
+        if (flag) {
+          return true
+        }
+        target[key]++
+        res.pop()
       }
     }
-    return -1
+  }
+  dic = sortObj(dic)
+  backTrack(dic)
+  return res
+  function sortObj(obj) {
+    let newObj = {}
+    const keys = Object.keys(obj)
+    keys.sort((a, b) => a > b ? 1 : -1)
+    keys.forEach((key) => {
+      if (obj[key] !== null && typeof obj[key] === 'object') {
+        newObj[key] = sortObj(obj[key])
+      } else {
+        newObj[key] = obj[key]
+      }
+    })
+    return newObj
   }
 };
 // @lc code=end
@@ -94,6 +76,8 @@ var findItinerary = function(tickets) {
 // @lcpr case=start
 // [["JFK","SFO"],["JFK","ATL"],["SFO","ATL"],["ATL","JFK"],["ATL","SFO"]]\n
 // @lcpr case=end
-
+// @lcpr case=start
+// [["JFK","SFO"],["JFK","ATL"],["SFO","JFK"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"],["ATL","AAA"],["AAA","BBB"],["BBB","ATL"]]\n
+// @lcpr case=end
  */
 

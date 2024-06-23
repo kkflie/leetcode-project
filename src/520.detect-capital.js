@@ -22,9 +22,7 @@ var detectCapitalUse = function(word) {
     }
     return word.split('').slice(1).every((e) => e >= 'a' && e <= 'z')
   }
-  if (word[0] >= 'a' && word[0] <= 'z') {
-    return word.split('').every((e) => e >= 'a' && e <= 'z')
-  }
+  return word.split('').every((e) => e >= 'a' && e <= 'z')
 };
 // @lc code=end
 

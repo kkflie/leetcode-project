@@ -15,32 +15,15 @@
  * @return {number[]}
  */
 var nextGreaterElements = function(nums) {
-  const res = []
-  for (let i = 0; i < nums.length; i++) {
-    let j = i + 1
-    let flag = false
-    while (j < nums.length) {
-      if (nums[j] > nums[i]) {
-        flag = true
-        res.push(nums[j])
-        break
-      }
-      j++
+  const n = nums.length
+  const res = new Array(n).fill(-1)
+  const stack = []
+  for (let i = 0; i < n * 2 - 1; i++) {
+    while (stack.length && nums[stack[stack.length - 1]] < nums[i % n]) {
+      res[stack[stack.length - 1]] = nums[i % n]
+      stack.pop()
     }
-    if (!flag) {
-      j = 0
-      while (j < i) {
-        if (nums[j] > nums[i]) {
-          flag = true
-          res.push(nums[j])
-          break
-        }
-        j++
-      }
-    }
-    if (!flag) {
-      res.push(-1)
-    }
+    stack.push(i % n)
   }
   return res
 };

@@ -15,16 +15,9 @@
  * @return {number}
  */
 var evalRPN = function(tokens) {
-  let i
-    i = tokens.length - 1
-  // i = tokens.length - 1
-  //   if (isNumber(tokens, i)) {
-  //     console.log('k')
-  //     tokens.splice(i - 3, 3, calc(tokens, i))
-  //   }
+  let i = tokens.length - 1
   while(tokens.length > 1 ) {
     if (isNumber(tokens, i)) {
-      // console.log('k')
       tokens.splice(i - 2, 3, calc(tokens, i))
       i = tokens.length - 1
     } else {

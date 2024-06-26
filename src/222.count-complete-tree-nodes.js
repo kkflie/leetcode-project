@@ -23,7 +23,16 @@
  * @return {number}
  */
 var countNodes = function(root) {
-
+  if (!root) return 0
+  const stack = [root]
+  let n = 0
+  while(stack.length) {
+    n++
+    const node = stack.pop()
+    if (node.right) stack.push(node.right)
+    if (node.left) stack.push(node.left)
+  }
+  return n
 };
 // @lc code=end
 

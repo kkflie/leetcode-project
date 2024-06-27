@@ -23,29 +23,17 @@
  * @return {TreeNode}
  */
 var convertBST = function(root) {
-  const res = []
-  function traverse(root) {
-    if (root === null)return
-    traverse(root.left)
-    res.push(root.val)
-    traverse(root.right)
+  // review
+  let pre = 0
+  function reverseInOrder(cur) {
+    if (cur) {
+      reverseInOrder(cur.right)
+      cur.val += pre
+      pre = cur.val
+      reverseInOrder(cur.left)
+    }
   }
-  let idx = 0
-  function traverse2(root) {
-    if (root === null)return
-    traverse2(root.left)
-    root.val = res[idx++]
-    traverse2(root.right)
-  }
-  traverse(root)
-  let total = res.reduce((a, b) => a + b, 0)
-  for (let i = 0; i < res.length; i++) {
-    const cur = res[i]
-    res[i] = total
-    total -= cur
-  }
-  traverse2(root)
-
+  reverseInOrder(root)
   return root
 };
 // @lc code=end

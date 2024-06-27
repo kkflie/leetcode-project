@@ -26,11 +26,11 @@
  */
 var lowestCommonAncestor = function(root, p, q) {
   function traverse(root, p, q) {
-    if (root === null || root === p || root === q) return root
-    if (p.val < root.val && q.val > root.val) return root
-    if (q.val < root.val && p.val > root.val) return root
+    //review
+    if (root === null) return root
     if (p.val < root.val && q.val < root.val) return traverse(root.left, p, q)
     if (p.val > root.val && q.val > root.val) return traverse(root.right, p, q)
+    return root
   }
   return traverse(root, p, q)
 };

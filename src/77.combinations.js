@@ -18,18 +18,18 @@
 var combine = function(n, k) {
   const res = []
   const path = []
-  function backTrack(n, k, start) {
+  backTrack(1)
+  function backTrack(start) {
     if (path.length === k) {
       res.push([...path])
       return
     }
-    for (let i = start; i <= n + 1 - k + path.length; i++) {
+    for (let i = start; i <= n - (k - path.length) + 1; i++) {
       path.push(i)
-      backTrack(n, k, i + 1)
+      backTrack(i + 1)
       path.pop()
     }
   }
-  backTrack(n, k, 1)
   return res
 };
 // @lc code=end

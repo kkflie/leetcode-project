@@ -19,19 +19,19 @@ var combinationSum2 = function(candidates, target) {
   const res = []
   const path = []
   candidates.sort((a, b) => a - b)
-  function backTrack(start, sum) {
+  function backTrack(sum, start) {
     if (sum === target) {
       res.push([...path])
       return
     }
     for (let i = start; i < candidates.length; i++) {
-      const num = candidates[i]
       if (i > start && candidates[i] === candidates[i - 1]) {
         continue
       }
-      if (num > target - sum) break
+      const num = candidates[i]
+      if (sum + num > target) break
       path.push(num)
-      backTrack(i + 1, sum + num)
+      backTrack(sum + num, i + 1)
       path.pop()
     }
   }

@@ -18,20 +18,22 @@
 var combinationSum = function(candidates, target) {
   const res = []
   const path = []
-  function backTrack(start, sum) {
-    if (sum >= target) {
-      if (sum === target) {
-        res.push([...path])
-      }
+  backTrack(0, 0)
+  function backTrack(sum, start) {
+    if (sum === target) {
+      res.push([...path])
       return
     }
     for (let i = start; i < candidates.length; i++) {
-      path.push(candidates[i])
-      backTrack(i, sum + candidates[i])
+      const num = candidates[i]
+      if (sum + num > target) {
+        continue 
+      }
+      path.push(num)
+      backTrack(sum + num, i)
       path.pop()
     }
   }
-  backTrack(0, 0)
   return res
 };
 // @lc code=end

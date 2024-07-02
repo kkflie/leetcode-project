@@ -17,19 +17,16 @@
 var subsets = function(nums) {
   const res = []
   let path = []
-  function backTrack(start, end) {
+  const len = nums.length
+  backTrack(0)
+  function backTrack(start) {
     res.push([...path])
-    if (start >= end) {
-      return
-    }
-    for (let i = start; i < end; i++) {
-      const num = nums[i]
-      path.push(num)
-      backTrack(i + 1, end)
+    for (let i = start; i < len; i++) {
+      path.push(nums[i])
+      backTrack(i + 1)
       path.pop()
     }
   }
-  backTrack(0, nums.length)
   return res
 };
 // @lc code=end

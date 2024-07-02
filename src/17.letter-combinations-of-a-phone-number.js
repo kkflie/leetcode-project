@@ -33,17 +33,17 @@ var letterCombinations = function(digits) {
   const k = digits.length
   const res = []
   let path = ''
-  function backTrack(i) {
+  function backTrack(start) {
     if (path.length === k) {
       res.push(path)
       return
     }
-      const word = dic[digits[i]]
-      for (let j = 0; j < word.length; j++) {
-        path += word[j]
-        backTrack(i + 1)
-        path = path.slice(0, i)
-      }
+    const word = dic[digits[start]]
+    for (let i = 0; i < word.length; i++) {
+      path += word[i]
+      backTrack(start + 1)
+      path = path.slice(0, path.length - 1)
+    }
   }
   backTrack(0)
   return res

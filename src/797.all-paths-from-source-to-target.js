@@ -19,13 +19,6 @@ var allPathsSourceTarget = function(graph) {
   const n = graph.length
   const res = []
   const path = []
-  const arr = new Array(n).fill(undefined).map(() => new Array(n).fill(0))
-  graph.forEach((e, i) => {
-    const edge = e
-    edge.forEach((v) => {
-      arr[i][v] = 1
-    })
-  })
   function dfs(start, end) {
     if (start === end) {
       res.push([...path])
@@ -33,7 +26,7 @@ var allPathsSourceTarget = function(graph) {
       return
     }
     for (let i = 1; i <= end; i++) {
-      if (arr[start][i] === 1) {
+      if (graph[start].indexOf(i) >= 0) {
         // console.log('edge', start, i)
         path.push(i)
         dfs(i, end)

@@ -23,6 +23,7 @@
  * @return {number}
  */
 var minCameraCover = function(root) {
+  // review
   let count = 0
   const res = traverse(root)
   if (res === 0) {

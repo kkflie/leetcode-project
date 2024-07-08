@@ -30,7 +30,7 @@ var minCameraCover = function(root) {
     count++
   }
   function traverse(root) {
-    if (!root) return -1
+    if (!root) return 1
     const left = traverse(root.left)
     const right = traverse(root.right)
     if (left === 0 || right === 0) {
@@ -38,14 +38,9 @@ var minCameraCover = function(root) {
       return 2
     } else if (left === 1 && right === 1){
       return 0
-    } else if (left > -1 && right > -1) {
-      return 1
-    } else if (left === 2) {
-      return 1
-    } else if (right === 2) {
+    } else {
       return 1
     }
-    return root.val
   }
   return count
 };

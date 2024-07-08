@@ -22,24 +22,49 @@
  * @return {boolean}
  */
 var isPalindrome = function(head) {
-  let node = head
-  let len = 0
-  const arr = []
-  while(node) {
-    arr.push(node.val)
-    node=node.next
-    len++
-  }
-  let i = 0, j = len - 1
-  while(i < j) {
-    if (arr[i] !== arr[j]) {
+  //review
+  let slow = head, fast = head
+  let pre = slow
+  while (fast) {
+    pre = slow
+    slow = slow.next
+    if (!fast.next) {
       break
+    }
+    fast = fast.next
+    if (fast.next) {
+      fast = fast.next
     } else {
-      i++
-      j--
+      break
     }
   }
-  return i === j || i - 1 === j
+  slow = reverse(slow)
+  pre.next = null
+  // traverse(slow)
+  while (slow && head) {
+    if (slow.val !== head.val) {
+      return false
+    }
+    slow = slow.next
+    head = head.next
+  }
+  return true
+  function traverse(root) {
+    while(root) {
+      root = root.next
+    }
+  }
+  function reverse(head) {
+    let cur = head
+    let pre = null
+    while (cur) {
+      let temp = cur.next
+      cur.next = pre
+      pre = cur 
+      cur = temp
+    }
+    return pre
+  }
 };
 // @lc code=end
 

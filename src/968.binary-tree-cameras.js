@@ -31,32 +31,20 @@ var minCameraCover = function(root) {
   }
   function traverse(root) {
     if (!root) return -1
-    traverse(root.left)
-    traverse(root.right)
-    if (root.left && root.right) {
-      if (root.left.val === 0 || root.right.val === 0) {
-        root.val = 2
-        count++
-      } else if (root.left.val === 1 && root.right.val === 1){
-      } else {
-        root.val = 1
-      }
-    } else if (root.left) {
-      if (root.left.val === 0) {
-        root.val = 2
-        count++
-      } else if (root.left.val === 2) {
-        root.val = 1
-      }
-    } else if (root.right) {
-      if (root.right.val === 0) {
-        root.val = 2
-        count++
-      } else if (root.right.val === 2) {
-        root.val = 1
-      }
+    const left = traverse(root.left)
+    const right = traverse(root.right)
+    if (left === 0 || right === 0) {
+      count++
+      return 2
+    } else if (left === 1 && right === 1){
+      return 0
+    } else if (left > -1 && right > -1) {
+      return 1
+    } else if (left === 2) {
+      return 1
+    } else if (right === 2) {
+      return 1
     }
-    // console.log(root.val)
     return root.val
   }
   return count

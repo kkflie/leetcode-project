@@ -16,15 +16,14 @@
  * @return {number}
  */
 var removeElement = function(nums, val) {
-  let i = 0
-  let j = 0
-  while (j < nums.length) {
-    if (nums[j] === val) {
-      j++
+  const n = nums.length
+  let i = 0, j = n
+  while (i < j) {
+    if (nums[i] === val) {
+      nums[i] = nums[j - 1]
+      j--
     } else {
-      nums[i] = nums[j]
       i++
-      j++
     }
   }
   return i

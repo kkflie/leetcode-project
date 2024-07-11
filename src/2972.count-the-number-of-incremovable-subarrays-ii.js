@@ -1,8 +1,8 @@
 /*
- * @lc app=leetcode.cn id=2970 lang=javascript
+ * @lc app=leetcode.cn id=2972 lang=javascript
  * @lcpr version=30204
  *
- * [2970] 统计移除递增子数组的数目 I
+ * [2972] 统计移除递增子数组的数目 II
  */
 
 
@@ -15,7 +15,6 @@
  * @return {number}
  */
 var incremovableSubarrayCount = function(nums) {
-  // review
   const n = nums.length
   let l = 1
   let res = 0

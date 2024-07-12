@@ -15,36 +15,47 @@
  * @return {string[]}
  */
 var findItinerary = function(tickets) {
-  let map = {}
   const path = ['JFK']
-  tickets.forEach(([start, end]) => {
+  const map = {}
+  tickets.forEach((ticket) => {
+    const [start, end] = ticket
     if (!map[start]) {
       map[start] = {}
     }
-    const value = map[start]
-    value[end] = (value[end] || 0) + 1
-    map[start] = value
+    map[start][end] = (map[start][end] || 0) + 1
   })
-  function backTrack(start) {
+  Object.keys(map).forEach(start => {
+    const destObj = map[start]
+    const keys = Object.keys(destObj).sort((a, b) => a < b ? -1 : 1)
+    const obj = {}
+    keys.forEach((key) => {
+      obj[key] = destObj[key]
+    })
+    map[start] = obj
+  })
+  backTrack()
+  function backTrack() {
     if (path.length === tickets.length + 1) {
       return true
     }
-    const endList = Object.entries(map[start] || {}).filter((e) => e[1] > 0)
-    if (endList.length < 1) {
-      return false
-    }
-    endList.sort((a, b) => a[0] < b[0] ? -1 : 1)
-    for (let i = 0; i < endList.length; i++) {
-      const end = endList[i]
-      path.push(end[0])
-      map[start][end[0]]--
-      if (backTrack(end[0])) return true
+    const start = path[path.length - 1]
+    const destObj = map[start]
+    if (!destObj) return false
+    const destList = Object.keys(destObj)
+    for (let i = 0; i < destList.length; i++) {
+      const dest = destList[i]
+      if (map[start][dest] < 1) {
+        continue
+      }
+      path.push(dest)
+      map[start][dest]--
+      if (backTrack()) {
+        return true
+      }
+      map[start][dest]++
       path.pop()
-      map[start][end[0]]++
     }
-    return false
   }
-  backTrack('JFK')
   return path
 };
 // @lc code=end

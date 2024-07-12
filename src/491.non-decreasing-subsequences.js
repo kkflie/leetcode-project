@@ -17,22 +17,17 @@
 var findSubsequences = function(nums) {
   let res = []
   let path = []
-  // nums.sort((a, b) => a - b)
-  const len = nums.length
   backTrack(0)
   function backTrack(start) {
     if (path.length > 1) {
-      res.push([...path])
+      res.push(path.slice())
     }
-    const used = []
-    for (let i = start; i < len; i++) {
-      if (nums[i] < path[path.length - 1]) {
+    let used = []
+    for (let i = start; i < nums.length; i++) {
+      if ((path.length > 0 && (nums[i] < path[path.length - 1])) || used[nums[i] + 100]) {
         continue
       }
-      if (used[100 + nums[i]] === 1) {
-        continue
-      }
-      used[100 + nums[i]] = 1
+      used[nums[i] + 100] = true
       path.push(nums[i])
       backTrack(i + 1)
       path.pop()

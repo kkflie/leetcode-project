@@ -17,13 +17,15 @@
 var subsetsWithDup = function(nums) {
   const res = []
   const path = []
-  const len = nums.length
+  const n = nums.length
   nums.sort((a, b) => a - b)
-  backTrack(0)
+  backTrack(0, new Array(n).fill(false))
   function backTrack(start) {
     res.push([...path])
-    for (let i = start; i < len; i++) {
-      if (i > start && nums[i] === nums[i - 1]) continue
+    for (let i = start; i < n; i++) {
+      if (i > start && nums[i] === nums[i - 1]) {
+        continue
+      }
       path.push(nums[i])
       backTrack(i + 1)
       path.pop()

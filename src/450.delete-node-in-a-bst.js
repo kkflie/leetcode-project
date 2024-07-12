@@ -34,7 +34,8 @@ var deleteNode = function(root, key) {
       pre = root
       traverse(root.right, key)
       return
-    } else if (root.val > key) {
+    }
+    if (root.val > key) {
       pre = root
       traverse(root.left, key)
       return
@@ -47,10 +48,6 @@ var deleteNode = function(root, key) {
       }
       return
     }
-    // if (!pre) {
-    //   root = null
-    //   return
-    // }
     if (!root.left) {
       if (key > pre.val) {
         pre.right = root.right

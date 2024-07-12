@@ -16,26 +16,29 @@
  * @return {number[][]}
  */
 var combinationSum2 = function(candidates, target) {
+  candidates.sort((a, b) => a - b)
+  const n = candidates.length
   const res = []
   const path = []
-  candidates.sort((a, b) => a - b)
-  function backTrack(sum, start) {
+  backTrack(0, 0)
+  function backTrack(start, sum) {
     if (sum === target) {
       res.push([...path])
       return
     }
-    for (let i = start; i < candidates.length; i++) {
+    for (let i = start; i < n; i++) {
       if (i > start && candidates[i] === candidates[i - 1]) {
         continue
       }
       const num = candidates[i]
-      if (sum + num > target) break
+      if (sum + num > target) {
+        return
+      }
       path.push(num)
-      backTrack(sum + num, i + 1)
+      backTrack(i + 1, sum + num)
       path.pop()
     }
   }
-  backTrack(0, 0)
   return res
 };
 // @lc code=end

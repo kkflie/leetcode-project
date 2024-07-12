@@ -17,23 +17,34 @@
 var partition = function(s) {
   const res = []
   const path = []
-  backTrack(s, 0)
+  const n = s.length
+  backTrack(0)
   return res
-  function backTrack(s, left) {
-    if (left >= s.length) {
+  function backTrack(start) {
+    if (start >= n) {
       res.push([...path])
+      // console.log('res', path)
       return
     }
-    for (let i = left; i < s.length; i++) {
-      if (!isPalindrone(s, left, i)) continue
-      path.push(s.slice(left, i + 1))
-      backTrack(s, i + 1)
-      path.pop()
+    for (let i = start; i < n; i++) {
+      if (isPalindrome(s, start, i)) {
+        path.push(s.slice(start, i + 1))
+        // console.log('path', path)
+        backTrack(i + 1)
+        path.pop()
+      } else {
+        continue
+      }
     }
-  }
-  function isPalindrone(s, left, right) {
-    for (let i = left, j = right; i < j; i++, j--) {
-      if (s[i] !== s[j]) return false
+  }  
+  function isPalindrome(s, start, end) {
+    let i = start, j = end
+    while (i <= j) {
+      if (s[i] !== s[j]) {
+        return false
+      }
+      i++
+      j--
     }
     return true
   }

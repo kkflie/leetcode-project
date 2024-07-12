@@ -15,15 +15,15 @@
  * @return {number[][]}
  */
 var subsets = function(nums) {
-  const res = []
+  const res = [[]]
   let path = []
-  const len = nums.length
+  const n = nums.length
   backTrack(0)
   function backTrack(start) {
-    res.push([...path])
-    for (let i = start; i < len; i++) {
+    for (let i = start; i < n; i++) {
       path.push(nums[i])
       backTrack(i + 1)
+      res.push([...path])
       path.pop()
     }
   }

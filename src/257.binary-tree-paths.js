@@ -30,8 +30,8 @@ var binaryTreePaths = function(root) {
       res.push(line.concat(root.val).join('->'))
       return
     }
-    root.right && traverse(line.concat(root.val), root.right)
     root.left && traverse(line.concat(root.val), root.left)
+    root.right && traverse(line.concat(root.val), root.right)
   }
   traverse([], root)
   return res

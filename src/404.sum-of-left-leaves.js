@@ -24,17 +24,11 @@
  */
 var sumOfLeftLeaves = function(root) {
   if (!root) return 0
-  let res = 0
-  function traverse(root) {
-    root.right && traverse(root.right)
-    if (root.left && !root.left.left && !root.left.right) {
-      res += root.left.val
-      return
-    }
-    root.left && traverse(root.left)
+  let leftVal = 0
+  if (root.left && !root.left.left && !root.left.right) {
+    leftVal = root.left.val
   }
-  traverse(root)
-  return res
+  return leftVal + sumOfLeftLeaves(root.left) + sumOfLeftLeaves(root.right)
 };
 // @lc code=end
 

@@ -24,28 +24,67 @@
  * @return {TreeNode}
  */
 var deleteNode = function(root, key) {
+  if (!root) return root
   // review
-  if (root === null) return null
-  if (root.val > key) {
-    root.left = deleteNode(root.left, key)
-  } else if (root.val < key) {
-    root.right = deleteNode(root.right, key)
-  } else {
-    if (root.left === null & root.right === null) return null
-    if (root.left === null) return root.right
-    if (root.right === null) return root.left
-    const minNode = getMinNode(root.right)
-    root.val = minNode.val
-    root.right = deleteNode(root.right, minNode.val)
-    return root
-  }
-  function getMinNode(root) {
-    while (root.left) {
-      root = root.left
+  let dummyNode = new TreeNode(root.val, root), pre = dummyNode
+  traverse(root, key)
+  function traverse(root, key) {
+    if (!root) return
+    if (root.val < key) {
+      pre = root
+      traverse(root.right, key)
+      return
+    } else if (root.val > key) {
+      pre = root
+      traverse(root.left, key)
+      return
     }
-    return root
+    if (!root.left && !root.right) {
+      if (pre.val >= key) {
+        pre.left = null
+      } else {
+        pre.right = null
+      }
+      return
+    }
+    // if (!pre) {
+    //   root = null
+    //   return
+    // }
+    if (!root.left) {
+      if (key > pre.val) {
+        pre.right = root.right
+      } else {
+        pre.left = root.right
+      }
+      return
+    }
+    if (!root.right) {
+      if (key > pre.val) {
+        pre.right = root.left
+      } else {
+        pre.left = root.left
+      }
+      return
+    }
+    if (key > pre.val) {
+      pre.right = root.right
+    } else {
+      // console.log('pre', pre.val, root.val)
+      pre.left = root.right
+    }
+    const left = root.left
+    let cur = root.right
+    while(cur) {
+      pre = cur
+      cur = cur.left
+    }
+    // console.log('pre-2', pre)
+    pre.left = left
+    return
+    // console.log(root.val)
   }
-  return root
+  return dummyNode.left
 };
 // @lc code=end
 

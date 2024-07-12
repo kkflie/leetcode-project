@@ -24,23 +24,24 @@
  * @return {TreeNode}
  */
 var insertIntoBST = function(root, val) {
+  let parent
   if (root === null) return new TreeNode(val)
   function traverse(root, val) {
-    if (root === null) return root
-    if (root.val < val) {
-      if (root.right === null) {
-        root.right = new TreeNode(val)
+    if (!root) {
+      const node = new TreeNode(val)
+      if (parent.val < val) {
+        parent.right = node
       } else {
-        root.right = traverse(root.right, val)
+        parent.left = node
       }
-    } else {
-      if (root.left === null) {
-        root.left = new TreeNode(val)
-      } else {
-        root.left = traverse(root.left, val)
-      }
+      return
     }
-    return root
+    parent = root
+    if (root.val > val) {
+      traverse(root.left, val)
+      return
+    }
+    traverse(root.right, val)
   }
   traverse(root, val)
   return root

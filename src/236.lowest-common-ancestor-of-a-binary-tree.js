@@ -26,7 +26,7 @@
 var lowestCommonAncestor = function(root, p, q) {
   //review
   function traverse(root, p, q) {
-    if (!root || root === p || root === q) {
+    if (!root || p === root || q === root) {
       return root
     }
     const left = traverse(root.left, p, q)

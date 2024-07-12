@@ -24,22 +24,16 @@
  */
 var isSymmetric = function(root) {
   if (!root) return true
-  const que = [root.left, root.right]
-  while(que.length) {
-    const left = que.shift()
-    const right = que.shift()
-    if (!left && !right) {
-      continue
-    }
-    if (!left || !right || left.val !== right.val) {
-      return false
-    }
-    que.push(left.left)
-    que.push(right.right)
-    que.push(left.right)
-    que.push(right.left)
+  return compare(root.left, root.right)
+  function compare(left, right) {
+    if (!left && !right) return true
+    if (!left) return false
+    if (!right) return false
+    if (left.val !== right.val) return false
+    const outside = compare(left.left, right.right)
+    const inside = compare(left.right, right.left)
+    return inside && outside
   }
-  return true
 };
 // @lc code=end
 

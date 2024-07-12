@@ -15,40 +15,35 @@
  * @return {number}
  */
 var evalRPN = function(tokens) {
-  let i = tokens.length - 1
-  while(tokens.length > 1 ) {
-    if (isNumber(tokens, i)) {
-      tokens.splice(i - 2, 3, calc(tokens, i))
-      i = tokens.length - 1
+  const n = tokens.length
+  const st = []
+  for (let i = 0; i < n; i++) {
+    if (!isNaN(tokens[i])) {
+      // 是数字
+      st.push(tokens[i])
     } else {
-      i --
+      const y = st.pop() - 0
+      const x = st.pop() - 0
+      switch (tokens[i]) {
+        case '+' :
+          st.push(x + y)
+          break
+        case '-' :
+          st.push(x - y)
+          break
+        case '*' :
+          st.push(x * y)
+          break
+        case '/' :
+          const flag = x * y > 0
+          let res = Math.floor(Math.abs(x / y))
+          res = flag ? res : 0 - res
+          st.push(res)
+          break
+      }
     }
   }
-  return tokens[0]
-  function isNumber(tokens, i) {
-    return !isNaN(tokens[i - 1]) && !isNaN(tokens[i - 2])
-  }
-  function calc(tokens, i) {
-    const ope = tokens[i]
-    const a = tokens[i - 2] - 0
-    const b = tokens[i - 1] - 0
-    // console.log('calc', a, b, ope)
-    switch(ope) {
-      case '+':
-        return a + b
-      case '-':
-        return a - b
-      case '*':
-        return a * b
-      case '/':
-        if (a * b < 0) {
-          return 0 - Math.floor(Math.abs(a / b)) 
-        }
-        return Math.floor(Math.abs(a / b))
-      default:
-        return 0
-    }
-  }
+  return st.pop()
 };
 // @lc code=end
 

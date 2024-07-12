@@ -17,42 +17,25 @@
  */
 var maxSlidingWindow = function(nums, k) {
   // review
-  class MonoQueue {
-    queue
-    constructor() {
-      this.queue = []
-    }
-    enqueue(value) {
-      let back = this.queue[this.queue.length - 1]
-      while(back !== undefined && back < value) {
-        this.queue.pop()
-        back = this.queue[this.queue.length - 1]
+  const st = [], n = nums.length, res = []
+  for (let i = 0; i < n; i++) {
+    if (st.length < 1) {
+      st.push(i)
+      if (i === k - 1) {
+        res.push(nums[st[0]])
       }
-      this.queue.push(value)
+      continue
     }
-    dequeue(value) {
-      let front = this.front() 
-      if (value === front) {
-        this.queue.shift()
-      }
+    if (i - k + 1 > st[0]) {
+      st.shift()
     }
-    front() {
-      return this.queue[0]
+    while (st.length > 0 && nums[i] > nums[st[st.length - 1]]) {
+      st.pop()
     }
-  }
-  let queue = new MonoQueue()
-  let i = 0, j = 0
-  const res = []
-  while (j < k) {
-    queue.enqueue(nums[j++])
-  }
-  res.push(queue.front())
-  while(j < nums.length) {
-    queue.enqueue(nums[j])
-    queue.dequeue(nums[i])
-    res.push(queue.front())
-    j++
-    i++
+    st.push(i)
+    if (i >= k -1) {
+      res.push(nums[st[0]])
+    }
   }
   return res
 };

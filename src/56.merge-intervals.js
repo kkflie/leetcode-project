@@ -15,22 +15,17 @@
  * @return {number[][]}
  */
 var merge = function(intervals) {
-  if (intervals.length < 2) return intervals
+  // review
   intervals.sort((a, b) => a[0] - b[0])
-  const res = []
   const n = intervals.length
-  let left = intervals[0][0], right = intervals[0][1]
+  const res = [intervals[0]]
   for (let i = 1; i < n; i++) {
-    if (intervals[i][0] <= intervals[i - 1][1]) {
-      right = Math.max(intervals[i - 1][1], intervals[i][1])
-      intervals[i][1] = right
+    if (res[res.length - 1][1] >= intervals[i][0]) {
+      res[res.length - 1][1] = Math.max(res[res.length - 1][1], intervals[i][1])
     } else {
-      res.push([left, right])
-      left = intervals[i][0]
-      right = intervals[i][1]
+      res.push(intervals[i])
     }
   }
-  res.push([left, right])
   return res
 };
 // @lc code=end

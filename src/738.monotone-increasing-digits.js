@@ -16,18 +16,21 @@
  */
 var monotoneIncreasingDigits = function(n) {
   // review
-  let s = ('' + n).split('')
-  let flag = s.length
-  for (let i = s.length - 1; i > 0; i--) {
-    if (s[i] - s[i - 1] < 0) {
-      flag = i
-      s[i - 1] = s[i - 1] - 1
+  if (n < 10) return n
+  const arr = (n + '').split('')
+  const len = arr.length
+  let start
+  for (let i = len - 1; i > 0; i--) {
+    if (arr[i] - arr[i - 1] < 0) {
+      start = i - 1
+      arr[i - 1]--
     }
   }
-  for (let i = flag; i < s.length; i++) {
-    s[i] = '9'
+  // console.log(start)
+  for (let i = start + 1; i < len; i++) {
+    arr[i] = '9'
   }
-  return s.join('') - 0
+  return arr.join('') - 0
 };
 // @lc code=end
 

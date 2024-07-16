@@ -18,13 +18,12 @@ var findMinArrowShots = function(points) {
   // review
   points.sort((a, b) => a[0] - b[0])
   const n = points.length
-  if (!n) return 0
   let count = 1
   for (let i = 1; i < n; i++) {
     if (points[i][0] > points[i - 1][1]) {
-      count++  
+      count++
     } else {
-      points[i][1] = Math.min(points[i - 1][1], points[i][1])
+      points[i][1] = Math.min(points[i][1], points[i - 1][1])
     }
   }
   return count

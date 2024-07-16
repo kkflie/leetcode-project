@@ -25,21 +25,33 @@
 var minCameraCover = function(root) {
   // review
   let count = 0
-  const res = traverse(root)
-  if (res === 0) {
-    count++
-  }
+  traverse(root)
+  if (root.val === 0) count++
   function traverse(root) {
-    if (!root) return 1
-    const left = traverse(root.left)
-    const right = traverse(root.right)
-    if (left === 0 || right === 0) {
+    if (!root || (!root.left && !root.right)) {
+      return
+    }
+    traverse(root.left)
+    traverse(root.right)
+    if (
+      (root.left && root.left.val === 0) ||
+      (root.right && root.right.val === 0)
+    ) {
+      root.val = 1
       count++
-      return 2
-    } else if (left === 1 && right === 1){
-      return 0
-    } else {
-      return 1
+      return
+    }
+    if (
+      (root.left && root.left.val === 1) ||
+      (root.right && root.right.val === 1)
+    ) {
+      root.val = 2
+    }
+    if (
+      (root.left && root.left.val === 2) ||
+      (root.right && root.right.val === 2)
+    ) {
+      return
     }
   }
   return count

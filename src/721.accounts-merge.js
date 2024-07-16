@@ -31,8 +31,7 @@ var accountsMerge = function(accounts) {
     }
     return i
   }
-  function merge(arr) {
-    let accounts = [...arr]
+  function merge(accounts) {
     let map = {}
     let flag = true
     while(1) {

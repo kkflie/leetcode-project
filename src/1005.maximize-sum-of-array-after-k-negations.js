@@ -25,7 +25,7 @@ var largestSumAfterKNegations = function(nums, k) {
     }
   }
   if (k % 2 === 1) nums[nums.length - 1] *= -1
-  console.log(nums)
+  // console.log(nums)
   return nums.reduce((a, b) => a + b)
   
 };

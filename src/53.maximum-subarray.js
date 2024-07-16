@@ -15,14 +15,26 @@
  * @return {number}
  */
 var maxSubArray = function(nums) {
-  const dp = new Array(nums.length).fill(0)
-  dp[0] = nums[0]
-  let max = nums[0]
-  for (let i = 1; i < nums.length; i++) {
-    dp[i] = Math.max(dp[i - 1] + nums[i], nums[i])
-    max = Math.max(max, dp[i])
+  // 贪心
+  const n = nums.length
+  let res = 0 - Number.MAX_SAFE_INTEGER
+  let sum = 0
+  for (let i = 0; i < n; i++) {
+    sum += nums[i]
+    if (sum > res) {
+      res = sum
+    }
+    if (sum < 0) sum = 0
   }
-  return max
+  return res
+  // 动态规划
+  // let max = nums[0]
+  // const n = nums.length
+  // for (let i = 1; i < n; i++) {
+  //   nums[i] = Math.max(nums[i], nums[i - 1] + nums[i])
+  //   max = Math.max(nums[i], max)
+  // }
+  // return max
 };
 // @lc code=end
 

@@ -18,18 +18,16 @@
 var canCompleteCircuit = function(gas, cost) {
   // review
   const n = gas.length
-  let curSum = 0
-  let total = 0
-  let start = 0
+  let sum = 0, curSum = 0, start = 0
   for (let i = 0; i < n; i++) {
+    sum += gas[i] - cost[i]
     curSum += gas[i] - cost[i]
-    total += gas[i] - cost[i]
     if (curSum < 0) {
       curSum = 0
       start = i + 1
     }
-  }
-  if (total < 0) return - 1
+  } 
+  if (sum < 0) return - 1
   return start
 };
 // @lc code=end

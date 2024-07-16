@@ -15,13 +15,25 @@
  * @return {number}
  */
 var maxProfit = function(prices) {
-  const dp = new Array(prices.length).fill([0, 0])
-  dp[0][0] = - prices[0]
-  for (let i = 1; i < prices.length; i++) {
-    dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] - prices[i])
-    dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + prices[i])
+  // 动态规划
+  const n = prices.length
+  let cost = -prices[0], profit = 0
+  // 0代表持有 1代表不持有
+  for (let i = 1; i < n; i++) {
+    profit = Math.max(cost + prices[i], profit)
+    cost = Math.max(cost, profit - prices[i])
   }
-  return dp[dp.length - 1][1]
+  return profit
+  // 贪心
+  // const n = prices.length
+  // let sum = 0
+  // for (let i = 1; i < n; i++) {
+  //   const res = prices[i] - prices[i - 1]
+  //   if (res > 0) {
+  //     sum += res
+  //   }
+  // }
+  // return sum
 };
 // @lc code=end
 

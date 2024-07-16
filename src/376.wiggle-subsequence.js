@@ -5,39 +5,48 @@
  * [376] 摆动序列
  */
 
+
+// @lcpr-template-start
+
+// @lcpr-template-end
 // @lc code=start
 /**
  * @param {number[]} nums
  * @return {number}
  */
 var wiggleMaxLength = function(nums) {
-  if (nums.length < 2) return nums.length
-  let idx1 = 0, idx2 = 0
-  let i = 1
-  let res = 0
-  while (i < nums.length) {
-    const n = nums[i - 1] - nums[i]
-    if (n === 0) {
-      i++
-      continue
+  const n = nums.length
+  const dp = new Array(n).fill(undefined)
+    .map(() => new Array(2).fill(0))
+  dp[0][0] = dp[0][1] = 1
+  for (let i = 1; i < n; i++) {
+    dp[i][0] = dp[i][1] = 1
+    for (let j = 0; j < i; j++) {
+      if (nums[j] > nums[i]) {
+        dp[i][1] = Math.max(dp[i][1], dp[j][0] + 1)
+      }
     }
-    if (res === 0) {
-      idx1 = i - 1
-      idx2 = i
-      i++
-      res = 2
-      continue
+    for (let j = 0; j < i; j++) {
+      if (nums[j] < nums[i]) {
+        dp[i][0] = Math.max(dp[i][0], dp[j][1] + 1)
+      }
     }
-    const lastTrend = nums[idx1] - nums[idx2]
-    const curTrend = nums[idx2] - nums[i]
-    if (lastTrend * curTrend < 0) {
-      idx1 = idx2
-      res++
-    }
-    idx2 = i
-    i++
   }
-  return res === 0 ? 1 : res
+  return Math.max(dp[n - 1][0], dp[n - 1][1])
+  // 贪心
+  // const arr = []
+  // let count= 0
+  // for (let i = 1; i < nums.length; i++) {
+  //   const res = nums[i] - nums[i - 1]
+  //   if (
+  //     res === 0 ||
+  //     (arr.length &&
+  //      arr[0] * res > 0)
+  //   ) continue
+  //   arr[0] = res
+  //   count++
+  // }
+  // return count < 2 && arr[0] === 0 ? 1 : count + 1
 };
 // @lc code=end
 

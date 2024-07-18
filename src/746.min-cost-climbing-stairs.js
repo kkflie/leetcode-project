@@ -16,12 +16,11 @@
  */
 var minCostClimbingStairs = function(cost) {
   // review
-  if (cost.length < 2) return 0
-  const dp = [0, 0]
-  for (let i = 2; i <= cost.length; i++) {
-    const m = Math.min(dp[0] + cost[i - 2], dp[1] + cost[i - 1])
-    dp[0] = dp[1]
-    dp[1] = m
+  const dp = [0, 0], n = cost.length
+  for (let i = 2; i <= n; i++) {
+    const temp = dp[1]
+    dp[1] = Math.min(dp[0] + cost[i - 2], dp[1] + cost[i - 1])
+    dp[0] = temp
   }
   return dp[1]
 };

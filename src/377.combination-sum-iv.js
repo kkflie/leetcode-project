@@ -23,7 +23,6 @@ var combinationSum4 = function(nums, target) {
     for (let i = 0; i < nums.length; i++) {
       if (j >= nums[i]) dp[j] += dp[j - nums[i]]
     }
-    console.log(dp)
   }
   return dp[target]
 };

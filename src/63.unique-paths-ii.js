@@ -17,13 +17,13 @@
 var uniquePathsWithObstacles = function(obstacleGrid) {
   const m = obstacleGrid.length
   const n = obstacleGrid[0].length
-  const dp = new Array(n).fill(1)
-  for (let j = 0; j < n; j++) {
+  const dp = new Array(n).fill(0)
+  dp[0] = obstacleGrid[0][0] === 1 ? 0 : 1
+  for (let j = 1; j < n; j++) {
     if (obstacleGrid[0][j] === 1) {
-      dp[j] = 0
-    } else {
-      dp[j] = j === 0 ? 1 : dp[j - 1]
+      break
     }
+    dp[j] = dp[j - 1]
   }
   for (let i = 1; i < m; i++) {
     if (obstacleGrid[i][0] === 1) {

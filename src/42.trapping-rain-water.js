@@ -16,24 +16,21 @@
  */
 var trap = function(height) {
   // review
-  const stack = [0]
-  let sum = 0
-  for(let i = 1; i < height.length; i++) {
-    while (stack.length && height[i] > height[stack[stack.length - 1]]) {
-      const mid = stack[stack.length - 1]
-      stack.pop()
-      if (stack.length) {
-
-      const h = Math.min(height[stack[stack.length - 1]], height[i]) - height[mid]
-      const w = i - stack[stack.length - 1] - 1
-      console.log(w, h) 
-      sum += h * w
-      }
-      // console.log(sum)
+  const st = [0]
+  const n = height.length
+  let res = 0
+  for (let i = 1; i < n; i++) {
+    while (st.length && height[i] > height[st[st.length - 1]]) {
+      const mid = st.pop()
+      if (!st.length) break
+      const midHeight = height[mid]
+      const h = Math.min(height[st[st.length - 1]], height[i]) - midHeight
+      const w = i - st[st.length - 1] - 1
+      res += h * w
     }
-    stack.push(i)
+    st.push(i)
   }
-  return sum
+  return res
 };
 // @lc code=end
 

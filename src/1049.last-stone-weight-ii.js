@@ -15,15 +15,15 @@
  * @return {number}
  */
 var lastStoneWeightII = function(stones) {
-  const total = stones.reduce((a,b)=>a+b,0)
-  const target = Math.ceil(total / 2)
+  const total = stones.reduce((a,b)=>a+b)
+  const target = total >> 1, n = stones.length
   const dp = new Array(target + 1).fill(0)
-  for (let i = 0; i < stones.length; i++) {
-    for (let j = target; j >= stones[i]; j--) {
+  for (let i = 0; i < n; i++) {
+    for (let j = target; j>= stones[i]; j--) {
       dp[j] = Math.max(dp[j], dp[j - stones[i]] + stones[i])
     }
   }
-  return Math.abs(total - 2 * dp[target])  
+  return Math.abs(total - 2 * dp[target])
 };
 // @lc code=end
 

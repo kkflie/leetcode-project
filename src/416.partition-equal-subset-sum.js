@@ -15,16 +15,15 @@
  * @return {boolean}
  */
 var canPartition = function(nums) {
-  const total = nums.reduce((a, b) => a + b, 0)
-  if (total % 2 !== 0) return false
-  const target = total / 2
-  const dp = new Array(target + 1).fill(0)
-  for (let i = 0; i < nums.length; i++) {
-    for (let j = target; j >= nums[i]; j--) {
-      dp[j] = Math.max(dp[j], dp[j - nums[i]] + nums[i])
-      if (dp[j] === target) {
-        return true
-      }
+  // review
+  const sum = nums.reduce((a, b) => a + b)
+  if (sum % 2 !== 0) return false
+  const mid = sum >> 1, n = nums.length
+  const dp = new Array(mid + 1).fill(0)
+  for (let i = 0; i < n; i++) {
+    for (let j = mid; j >= nums[i]; j--) {
+      dp[j] = Math.max(dp[j - nums[i]] + nums[i], dp[j])
+      if (dp[j] === mid) return true
     }
   }
   return false

@@ -19,19 +19,21 @@ var longestCommonSubsequence = function(text1, text2) {
   // review
   const nums1 = text1.split('')
   const nums2 = text2.split('')
-  const len1 = nums1.length
-  const len2 = nums2.length
-  const dp = new Array(len1 + 1).fill(undefined).map(() => new Array(len2 + 1).fill(0))
-  for (let i = 1; i <= len1; i++) {
-    for (let j = 1; j <= len2; j++) {
+  const m = nums1.length, n = nums2.length
+  const dp = new Array(m + 1).fill(undefined).map(() => new Array(n + 1).fill(0))
+  let res = 0
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
       if (nums1[i - 1] === nums2[j - 1]) {
-        dp[i][j] = dp[i - 1][j - 1] + 1
+        dp[i][j] = Math.max(dp[i - 1][j - 1]) + 1
       } else {
         dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1])
       }
+      res = Math.max(res, dp[i][j])
     }
   }
-  return dp[len1][len2]
+  console.log(dp)
+  return res
 };
 // @lc code=end
 

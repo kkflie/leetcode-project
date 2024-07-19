@@ -7,7 +7,7 @@ const input = [
 const visited = new Array(input.length).fill(undefined)
   .map(() => new Array(input[0].length).fill(false))
 
-// 上右下左
+// 右下左上
 const dir = [
   [0, 1],
   [1, 0],

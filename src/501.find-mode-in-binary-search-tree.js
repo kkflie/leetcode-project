@@ -25,29 +25,33 @@
 var findMode = function(root) {
   // review
   const res = []
-  let pre
   let maxCount = 0
-  let count = 0
-  function traverse(root) {
-    if (!root) return
-    traverse(root.left)
-    if (!pre || pre.val !== root.val) {
-      count = 1
+  let count = 0, pre, cur = root
+  const st = []
+  while(cur || st.length) {
+    if (cur) {
+      st.push(cur)
+      cur = cur.left
     } else {
-      count++
+      cur = st.pop()
+      // console.log(cur.val)
+      if (!pre || pre.val !== cur.val) {
+        count = 1
+      } else {
+        count++
+      }
+      pre = cur
+      if (count === maxCount) {
+        res.push(cur.val)
+      }
+      if (count > maxCount) {
+        res.length = 0
+        res.push(cur.val)
+        maxCount = count
+      }
+      cur = cur.right
     }
-    pre = root
-    if (count === maxCount) {
-      res.push(root.val)
-    }
-    if (count > maxCount) {
-      maxCount = count
-      res.length = 0
-      res.push(root.val)
-    }
-    traverse(root.right)
   }
-  traverse(root)
   return res
 };
 // @lc code=end

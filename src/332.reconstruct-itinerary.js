@@ -15,54 +15,48 @@
  * @return {string[]}
  */
 var findItinerary = function(tickets) {
-  let dic = {}
-  tickets.forEach((e) => {
-    if (dic[e[0]] === undefined) {
-      dic[e[0]] = { [e[1]]: 0 }
+  const path = ['JFK']
+  const map = {}
+  tickets.forEach((ticket) => {
+    const [start, end] = ticket
+    if (!map[start]) {
+      map[start] = {}
     }
-    dic[e[0]][e[1]] = (dic[e[0]][e[1]] || 0) + 1
+    map[start][end] = (map[start][end] || 0) + 1
   })
-  
-  const res = ['JFK']
+  Object.keys(map).forEach(start => {
+    const destObj = map[start]
+    const keys = Object.keys(destObj).sort((a, b) => a < b ? -1 : 1)
+    const obj = {}
+    keys.forEach((key) => {
+      obj[key] = destObj[key]
+    })
+    map[start] = obj
+  })
+  backTrack()
   function backTrack() {
-    if (res.length >= tickets.length + 1) {
+    if (path.length === tickets.length + 1) {
       return true
     }
-    const target = dic[res[res.length - 1]]
-    if (!target) {
-      return false
-    }
-    const keys = Object.keys(target)
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i]
-      if (target[key] > 0) {
-        target[key]--
-        res.push(key)
-        const flag = backTrack(dic)
-        if (flag) {
-          return true
-        }
-        target[key]++
-        res.pop()
+    const start = path[path.length - 1]
+    const destObj = map[start]
+    if (!destObj) return false
+    const destList = Object.keys(destObj)
+    for (let i = 0; i < destList.length; i++) {
+      const dest = destList[i]
+      if (map[start][dest] < 1) {
+        continue
       }
+      path.push(dest)
+      map[start][dest]--
+      if (backTrack()) {
+        return true
+      }
+      map[start][dest]++
+      path.pop()
     }
   }
-  dic = sortObj(dic)
-  backTrack(dic)
-  return res
-  function sortObj(obj) {
-    let newObj = {}
-    const keys = Object.keys(obj)
-    keys.sort((a, b) => a > b ? 1 : -1)
-    keys.forEach((key) => {
-      if (obj[key] !== null && typeof obj[key] === 'object') {
-        newObj[key] = sortObj(obj[key])
-      } else {
-        newObj[key] = obj[key]
-      }
-    })
-    return newObj
-  }
+  return path
 };
 // @lc code=end
 

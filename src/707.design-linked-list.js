@@ -1,27 +1,35 @@
 /*
  * @lc app=leetcode.cn id=707 lang=javascript
- * @lcpr version=30203
+ * @lcpr version=30204
  *
  * [707] 设计链表
  */
 
+
+// @lcpr-template-start
+
+// @lcpr-template-end
 // @lc code=start
 
-function LinkNode(val, next) {
+function ListNode(val, next) {
   this.val = val
   this.next = next
 }
-
 var MyLinkedList = function() {
-  this._size = 0
-  this._head = null
-  this._tail = null
+  this.size = 0
+  this.head = null
+  this.tail = null
 };
 
-MyLinkedList.prototype.getNode = function (index) {
-  if (index < 0 || index >= this._size) return null
-  let cur = new LinkNode(0, this._head)
-  while(index-->=0) {
+/**
+ * 
+ * @param {number} index 
+ * @return {ListNode}
+ */
+MyLinkedList.prototype.getNode = function(index) {
+  if (index <0 || index >= this.size) return null
+  let cur = new ListNode(0, this.head)
+  while (index-- >= 0) {
     cur = cur.next
   }
   return cur
@@ -32,8 +40,10 @@ MyLinkedList.prototype.getNode = function (index) {
  * @return {number}
  */
 MyLinkedList.prototype.get = function(index) {
-  if (index < 0 || index >= this._size) return -1
-  return this.getNode(index).val
+  if (index < 0 || index >= this.size) return -1
+  const node = this.getNode(index)
+  if (!node) return -1
+  return node.val
 };
 
 /** 
@@ -41,12 +51,16 @@ MyLinkedList.prototype.get = function(index) {
  * @return {void}
  */
 MyLinkedList.prototype.addAtHead = function(val) {
-  const node = new LinkNode(val, this._head)
-  this._size++
-  this._head = node
-  if (!this._tail) {
-    this._tail = node
+  const node = new ListNode(val)
+  if (this.size < 1) {
+    this.head = node
+    this.tail = node
+    this.size++
+    return
   }
+  this.size++
+  node.next = this.head
+  this.head = node
 };
 
 /** 
@@ -54,15 +68,16 @@ MyLinkedList.prototype.addAtHead = function(val) {
  * @return {void}
  */
 MyLinkedList.prototype.addAtTail = function(val) {
-  const node = new LinkNode(val, null)
-  this._size++
-  if (this._tail) {
-    this._tail.next = node
-    this._tail = node
+  const node = new ListNode(val)
+  if (this.size < 1) {
+    this.head = node
+    this.tail = node
+    this.size++
     return
   }
-  this._tail = node
-  this._head = node
+  this.size++
+  this.tail.next = node
+  this.tail = node
 };
 
 /** 
@@ -71,18 +86,17 @@ MyLinkedList.prototype.addAtTail = function(val) {
  * @return {void}
  */
 MyLinkedList.prototype.addAtIndex = function(index, val) {
-  if (index > this._size) return
+  if (index > this.size) return
   if (index <= 0) {
     this.addAtHead(val)
     return
-  }
-  if (index === this._size) {
+  } else if (index === this.size) {
     this.addAtTail(val)
     return
   }
-  this._size++
-  const pre = this.getNode(index - 1)
-  const node = new LinkNode(val, pre.next)
+  this.size++
+  const pre= this.getNode(index - 1) 
+  const node = new ListNode(val, pre.next)
   pre.next = node
 };
 
@@ -91,21 +105,29 @@ MyLinkedList.prototype.addAtIndex = function(index, val) {
  * @return {void}
  */
 MyLinkedList.prototype.deleteAtIndex = function(index) {
-  if (index < 0 || index >= this._size) return
+  if (index < 0 || index >= this.size) return
   if (index === 0) {
-    this._head = this._head.next
-    if (index === this._size - 1) {
-      this._tail = this._head
+    this.head = this.head.next 
+    if (this.size < 2) {
+      this.tail = null
     }
-  this._size--
+    this.size--
+    return
+  } else if (index === this.size - 1) {
+    if (this.size < 2) {
+      this.head = null
+      this.tail = null
+      this.size--
+      return
+    }
+    const pre = this.getNode(index - 1)
+    this.tail = pre
+    this.size--
     return
   }
-  const pre = this.getNode(index - 1)
+  const pre = this.getNode(index - 1) 
   pre.next = pre.next.next
-  if (index === this._size - 1) {
-    this._tail = pre
-  }
-  this._size--
+  this.size--
 };
 
 /**

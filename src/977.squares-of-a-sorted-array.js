@@ -15,22 +15,21 @@
  * @return {number[]}
  */
 var sortedSquares = function(nums) {
-  let i =0
-  let j = nums.length - 1
-  let k = nums.length - 1
-  const res = []
-  while (i <= j) {
-    const n1 = nums[i] * nums[i]
-    const n2 = nums[j] * nums[j]
-    if (n1 > n2) {
-      res[k--] = n1
+  const n = nums.length
+  const arr = []
+  let i = 0, j = n - 1
+  while(i <= j) {
+    const a = nums[i] * nums[i]
+    const b = nums[j] * nums[j]
+    if (a > b) {
+      arr.unshift(a)
       i++
     } else {
-      res[k--] = n2
+      arr.unshift(b)
       j--
     }
   }
-  return res
+  return arr
 };
 // @lc code=end
 

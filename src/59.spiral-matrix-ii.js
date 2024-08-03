@@ -15,36 +15,35 @@
  * @return {number[][]}
  */
 var generateMatrix = function(n) {
+  // review
+  const res = new Array(n).fill(undefined).map(() => new Array(n).fill(0))
+  let count = 1
+  let loop = Math.ceil(n / 2)
+  let offset = 0
   let i = 0
   let j = 0
-  const res = new Array(n).fill(null).map(_ => new Array(n).fill(null))
-  let loop = Math.floor(n / 2)
-  let offset = 1
-  let startX = 0
-  let startY = 0
-  let mid = Math.floor(n / 2)
-  let count = 1
   while (loop--) {
-    i = startX
-    j = startY
+    i = offset
+    j = offset
     for (; j < n - offset; j++) {
       res[i][j] = count++
     }
+    j--
+    i++
     for (; i < n - offset; i++) {
       res[i][j] = count++
     }
-    for (; j > offset-1; j--) {
+    i--
+    j--
+    for (; j >= offset; j--) {
       res[i][j] = count++
     }
-    for (; i > offset-1; i--) {
+    j++
+    i--
+    for (; i > offset; i--) {
       res[i][j] = count++
     }
-    startX++
-    startY++
     offset++
-  }
-  if (n % 2) {
-    res[mid][mid] = count
   }
   return res
 };

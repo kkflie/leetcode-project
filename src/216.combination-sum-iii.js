@@ -18,27 +18,26 @@
 var combinationSum3 = function(k, n) {
   const res = []
   const path = []
-  function backTrack(n, k, sum, start) {
-    if (sum > n) {
-      return true
-    }
+  let sum = 0
+  backTrack(1)
+  function backTrack(start) {
     if (path.length === k) {
       if (sum === n) {
         res.push([...path])
       }
       return
-    }
-    for (let i = start; i <= 9 - k + path.length + 1; i++) {
-      path.push(i)
-      sum += i
-      const flag = backTrack(n, k, sum, i+1)
-      sum -= path.pop()
-      if (flag) {
+    } 
+    for (let i = start; i <= 9 - (k - path.length) + 1; i++) {
+      if (sum + i > n) {
         return
       }
+      path.push(i)
+      sum += i
+      backTrack(i + 1)
+      sum -= i
+      path.pop()
     }
   }
-  backTrack(n, k, 0, 1)
   return res
 };
 // @lc code=end

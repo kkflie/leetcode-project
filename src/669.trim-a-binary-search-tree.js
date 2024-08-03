@@ -26,28 +26,17 @@
  */
 var trimBST = function(root, low, high) {
   // review
-  if (root === null) return null
-  while (root !== null && (root.val < low || root.val > high)) {
-    if (root.val < low) {
-      root = root.right
-    } else {
-      root = root.left
-    }
+  if (!root) return null
+  if (root.val < low) {
+    pre = root
+    return trimBST(root.right, low, high)
   }
-  let cur = root
-  while(cur) {
-    while(cur.left && cur.left.val < low) {
-      cur.left = cur.left.right
-    }
-    cur = cur.left
+  if (root.val > high) {
+    pre = root
+    return trimBST(root.left, low, high)
   }
-  cur = root
-  while(cur) {
-    while(cur.right && cur.right.val > high) {
-      cur.right = cur.right.left
-    }
-    cur = cur.right
-  }
+  root.left = trimBST(root.left, low, high) 
+  root.right = trimBST(root.right, low, high) 
   return root
 };
 // @lc code=end

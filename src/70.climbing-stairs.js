@@ -15,17 +15,13 @@
  * @return {number}
  */
 var climbStairs = function(n) {
-  const dp = [0, 1, 2]
-  if (n <= 2) {
-    return dp[n]
+  const dp = [1, 1]
+  for (let i = 2; i <= n; i++) {
+    const temp = dp[1]
+    dp[1] = dp[0] + dp[1]
+    dp[0] = temp
   }
-  for (let i = 3; i <= n; i++) {
-    const sum = dp[1] + dp[2]
-    dp[1] = dp[2]
-    dp[2] = sum
-  }
-  console.log(dp)
-  return dp[2]
+  return dp[1]
 };
 // @lc code=end
 

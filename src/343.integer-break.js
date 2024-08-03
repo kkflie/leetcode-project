@@ -16,10 +16,12 @@
  */
 var integerBreak = function(n) {
   const dp = new Array(n + 1).fill(0)
-  dp[2] = 1
+  dp[2] = 1 
   for (let i = 3; i <= n; i++) {
-    for (let j = 1; j <= Math.floor(i / 2); j++) {
-      dp[i] = Math.max(Math.max(dp[i], dp[i - j] * j), (i - j) * j)
+    const n2 = i >> 1
+    dp[i] = n2 * (i - n2)
+    for (let j = 2; j <= n2; j++) {
+      dp[i] = Math.max(dp[i], dp[i - j] * j)
     }
   }
   return dp[n]

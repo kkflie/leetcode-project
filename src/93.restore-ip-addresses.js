@@ -17,27 +17,35 @@
 var restoreIpAddresses = function(s) {
   const res = []
   const path = []
+  const n = s.length
+  backTrack(0)
+  return res
   function backTrack(start) {
-    if (path.length >= 4) {
-      if (start >= s.length) {
+    if (path.length === 4) {
+      if (start === n) {
         res.push(path.join('.'))
       }
       return
     }
-    for (let i = start; i < s.length; i++) {
-      const s1 = s.slice(start, i + 1)
-      const num = s1 - 0
-      if (num > 255 || (s1[0] === '0' && s1.length > 1)) {
-        break
-      } else {
-        path.push(s1)
+    for (let i = start; i < n; i++) {
+      if (i - start > 2 || (path.length === 3 && start + i < n - 1)) {
+        return
       }
+      const num = s.slice(start, i + 1)
+      if (
+        num > 255 ||
+        (
+          num > 0 && num < 100 ||
+          num - 0 === 0 && num.length > 1
+        ) && num[0] === '0'
+      ) {
+        return
+      }
+      path.push(num)
       backTrack(i + 1)
       path.pop()
     }
   }
-  backTrack(0)
-  return res
 };
 // @lc code=end
 

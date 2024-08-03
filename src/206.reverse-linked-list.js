@@ -22,15 +22,13 @@
  * @return {ListNode}
  */
 var reverseList = function(head) {
-  // review
-  let temp
-  let cur = head
   let pre = null
-  while (cur) {
-    temp = cur.next
-    cur.next = pre
-    pre = cur
-    cur = temp
+  let node = head
+  while(node) {
+    let temp = node.next
+    node.next = pre
+    pre = node
+    node = temp
   }
   return pre
 };

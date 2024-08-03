@@ -16,25 +16,21 @@
  */
 var subsetsWithDup = function(nums) {
   const res = []
-  const used = new Array(nums.length).fill(false)
-  let path = []
-  const end = nums.length
+  const path = []
+  const n = nums.length
+  nums.sort((a, b) => a - b)
+  backTrack(0, new Array(n).fill(false))
   function backTrack(start) {
     res.push([...path])
-    for (let i = start; i < end; i++) {
-      if (i > 0 && nums[i] === nums[i - 1] && used[i - 1] === false) {
+    for (let i = start; i < n; i++) {
+      if (i > start && nums[i] === nums[i - 1]) {
         continue
       }
-      const num = nums[i]
-      path.push(num)
-      used[i] = true
+      path.push(nums[i])
       backTrack(i + 1)
-      used[i] = false
       path.pop()
     }
   }
-  nums.sort((a, b) => a - b)
-  backTrack(0)
   return res
 };
 // @lc code=end

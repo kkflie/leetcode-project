@@ -15,21 +15,18 @@
  * @return {number[][]}
  */
 var subsets = function(nums) {
-  const res = []
+  const res = [[]]
   let path = []
-  function backTrack(start, end) {
-    res.push([...path])
-    if (start >= end) {
-      return
-    }
-    for (let i = start; i < end; i++) {
-      const num = nums[i]
-      path.push(num)
-      backTrack(i + 1, end)
+  const n = nums.length
+  backTrack(0)
+  function backTrack(start) {
+    for (let i = start; i < n; i++) {
+      path.push(nums[i])
+      backTrack(i + 1)
+      res.push([...path])
       path.pop()
     }
   }
-  backTrack(0, nums.length)
   return res
 };
 // @lc code=end

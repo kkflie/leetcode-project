@@ -16,22 +16,20 @@
  * @return {number[][]}
  */
 var combine = function(n, k) {
-  let res = []
-  let path = []
-
-  function backTrack(n, k, startIdx) {
+  const res = []
+  const path = []
+  backTrack(1)
+  function backTrack(start) {
     if (path.length === k) {
       res.push([...path])
       return
     }
-    for (let i = startIdx; i <= n; i++) {
+    for (let i = start; i <= n - (k - path.length) + 1; i++) {
       path.push(i)
-      backTrack(n, k, i + 1)
+      backTrack(i + 1)
       path.pop()
     }
   }
-
-  backTrack(n, k, 1)
   return res
 };
 // @lc code=end

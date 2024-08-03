@@ -17,23 +17,23 @@
 var permute = function(nums) {
   const res = []
   const path = []
+  const n = nums.length
+  backTrack(new Array(n).fill(false))
   function backTrack(used) {
-    if (path.length === nums.length) {
-      res.push([...path])
+    if (path.length === n) {
+      res.push(path.slice())
       return
     }
-    for (let i = 0; i < nums.length; i++) {
-      if (used[i] === true) {
-        continue
-      }
-      path.push(nums[i])
+    for (let i = 0; i < n; i++) {
+      if (used[i]) continue
+      const num = nums[i]
+      path.push(num)
       used[i] = true
       backTrack(used)
-      path.pop()
       used[i] = false
+      path.pop()
     }
   }
-  backTrack([false, false, false])
   return res
 };
 // @lc code=end

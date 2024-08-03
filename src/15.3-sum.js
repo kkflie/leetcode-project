@@ -17,17 +17,13 @@
 var threeSum = function(nums) {
   // review
   nums.sort((a, b) => a - b)
-  let i = 0
-  const len = nums.length
+  const n = nums.length
   const res = []
-  while (i < len) {
+  for (let i = 0; i < n; i++) {
     const num = nums[i]
     if (num > 0) return res
-    if (i > 0 && num === nums[i -1]) {
-      i++
-      continue
-    }
-    let l = i + 1, r = len - 1
+    let l = i + 1, r = n - 1
+    if (i > 0 && num === nums[i - 1]) continue
     while (l < r) {
       const sum = num + nums[l] + nums[r]
       if (sum < 0) {
@@ -35,18 +31,17 @@ var threeSum = function(nums) {
       } else if (sum > 0) {
         r--
       } else {
-        res.push([num, nums[l], nums[r]])
-        while (l < r && nums[l] === nums[l + 1]) {
+        res.push([nums[i], nums[l], nums[r]])
+        while(l < r && nums[l] === nums[l + 1]) {
           l++
         }
-        while (l < r && nums[r] === nums[r - 1]) {
+        while(l < r && nums[r] === nums[r - 1]) {
           r--
         }
         l++
         r--
       }
     }
-    i++
   }
   return res
 };

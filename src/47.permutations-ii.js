@@ -17,27 +17,28 @@
 var permuteUnique = function(nums) {
   const res = []
   const path = []
+  const n = nums.length
+  const used = new Array(n).fill(false)
+  nums.sort((a, b) => a - b)
+  backTrack(used)
   function backTrack(used) {
-    if (path.length >= nums.length) {
-      res.push([...path])
+    if (path.length === n) {
+      res.push(path.slice())
       return
     }
-    for (let i = 0; i < nums.length; i++) {
-      if (i > 0 && nums[i - 1] === nums[i] && used[i - 1] === false) {
+    for (let i = 0; i < n; i++) {
+      if (used[i] ||
+        (i > 0 && nums[i] === nums[i - 1] && !used[i - 1])
+      ) {
         continue
       }
-      if (used[i] === true) {
-        continue
-      }
-      path.push(nums[i])
       used[i] = true
+      path.push(nums[i])
       backTrack(used)
-      used[i] = false
       path.pop()
+      used[i] = false
     }
   }
-  nums.sort((a, b) => a - b)
-  backTrack(nums.map((_) => false))
   return res
 };
 // @lc code=end

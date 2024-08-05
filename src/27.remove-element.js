@@ -17,14 +17,13 @@
  */
 var removeElement = function(nums, val) {
   const n = nums.length
-  let i = 0, j = n
-  while (i < j) {
-    if (nums[i] === val) {
-      nums[i] = nums[j - 1]
-      j--
-    } else {
-      i++
+  let j = 0, i = 0
+  for (; j < n;) {
+    if (nums[j] === val) {
+      j++
+      continue
     }
+    nums[i++] = nums[j++]
   }
   return i
 };

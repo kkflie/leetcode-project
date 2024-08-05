@@ -17,16 +17,16 @@
 var sortedSquares = function(nums) {
   const n = nums.length
   const arr = []
-  let i = 0, j = n - 1
-  while(i <= j) {
-    const a = nums[i] * nums[i]
-    const b = nums[j] * nums[j]
-    if (a > b) {
-      arr.unshift(a)
-      i++
+  let l = 0, r = n - 1
+  while (l <= r) {
+    const a1 = nums[l] * nums[l]
+    const a2 = nums[r] * nums[r]
+    if (a2 > a1) {
+      arr.unshift(a2)
+      r--
     } else {
-      arr.unshift(b)
-      j--
+      arr.unshift(a1)
+      l++
     }
   }
   return arr

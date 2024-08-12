@@ -12,7 +12,7 @@
 // @lc code=start
 
 var MagicDictionary = function() {
-  this.list = []
+  this.root = new Trie();
 };
 
 /** 
@@ -20,7 +20,17 @@ var MagicDictionary = function() {
  * @return {void}
  */
 MagicDictionary.prototype.buildDict = function(dictionary) {
-  this.list = dictionary.slice()
+  for (const word of dictionary) {
+    let cur = this.root
+    for (let i in word) {
+      const idx = word.charCodeAt(i) - 'a'.charCodeAt(0)
+      if (!cur.child[idx]) {
+        cur.child[idx] = new Trie()
+      }
+      cur = cur.child[idx]
+    }
+    cur.isFinished = true
+  }
 };
 
 /** 
@@ -28,28 +38,40 @@ MagicDictionary.prototype.buildDict = function(dictionary) {
  * @return {boolean}
  */
 MagicDictionary.prototype.search = function(searchWord) {
-  if (!this.list.length) {
-    return false
+  return dfs(searchWord, this.root, 0, false);
+};
+
+const dfs = (searchWord, node, pos, modified) => {
+  if (pos === searchWord.length) {
+    return node.isFinished && modified
   }
-  for (let word of this.list) {
-    if (word.length !== searchWord.length) {
-      continue
-    }
-    let diff = 0
-    for (let i in word) {
-      if (word[i] !== searchWord[i]) {
-        diff++
-      }
-      if (diff > 1) {
-        break
-      }
-    }
-    if (diff === 1) {
+
+  const idx = searchWord.charCodeAt(pos) - 'a'.charCodeAt(0)
+  if (node.child[idx]) {
+    if (dfs(searchWord, node.child[idx], pos + 1, modified)) {
       return true
     }
   }
+
+  if (!modified) {
+    for (let i = 0; i < 26; i++) {
+      if (i === idx || !node.child[i]) {
+        continue
+      }
+      if (dfs(searchWord, node.child[i], pos + 1, true)) {
+        return true
+      }
+    } 
+  }
   return false
-};
+}
+
+class Trie {
+  constructor() {
+      this.isFinished = false;
+      this.child = new Array(26).fill(0);
+  }
+}
 
 /**
  * Your MagicDictionary object will be instantiated and called as such:

@@ -23,40 +23,46 @@
  * @return {ListNode}
  */
 var addTwoNumbers = function(l1, l2) {
-  let p = l1, q = l2, pre, k = 0
-  while (p && q) {
-    p.val = p.val + q.val + k
-    if (p.val >= 10) {
-      k = 1
-      p.val -= 10
+  let needPlusFlag = 0
+  let head = l1
+  let pre1 = l1
+
+  while (l1 && l2) {
+    l1.val = l1.val + l2.val + needPlusFlag
+    if (l1.val >= 10) {
+      needPlusFlag = 1
+      l1.val -= 10
     } else {
-      k = 0
+      needPlusFlag = 0
     }
-    pre = p
-    p = p.next
-    q = q.next
+    pre1 = l1
+    l1 = l1.next
+    l2 = l2.next
   }
-  if (p && !k) {
-    return l1
-  } else if (q) {
-    pre.next = q
-    p = q
+
+  if (l2) {
+    pre1.next = l2
+    l1 = l2
   }
-  while(p) {
-    p.val += k
-    if (p.val >= 10) {
-      k = 1
-      p.val -= 10
+
+  while (l1) {
+    l1.val += needPlusFlag
+    if (l1.val >= 10) {
+      needPlusFlag = 1
+      l1.val -= 10
     } else {
-      k = 0
+      needPlusFlag = 0
     }
-    pre = p
-    p = p.next
+    pre1 = l1
+    l1 = l1.next
   }
-  if (k) {
-    pre.next = new ListNode(1)
+
+  if (needPlusFlag) {
+    pre1.next = new ListNode(needPlusFlag, null)
   }
-  return l1
+
+
+  return head
 };
 // @lc code=end
 

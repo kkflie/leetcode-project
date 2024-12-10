@@ -15,11 +15,10 @@
  * @return {number}
  */
 var climbStairs = function(n) {
-  const dp = [1, 1]
-  for (let i = 2; i <= n; i++) {
-    const temp = dp[1]
-    dp[1] = dp[0] + dp[1]
-    dp[0] = temp
+  if (n < 4) return n
+  let dp = [2, 3]
+  for (let i = 4; i <= n; i++) {
+    dp = [dp[1], dp[0] + dp[1]]
   }
   return dp[1]
 };

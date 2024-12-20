@@ -16,13 +16,16 @@
  * @return {number}
  */
 var uniquePaths = function(m, n) {
-  const dp = new Array(n + 1).fill(1)
-  for (let i = 2; i <= m; i++) {
-    for (let j = 2; j <= n; j++) {
-      dp[j] = dp[j] + dp[j - 1]
+  const dp = new Array(m).map(() => new Array(n))
+  for (let i = 0; i < m; i++) {
+    if (i === 0) {
+      dp[i] = new Array(n).fill(1)
+      continue
+    }
+    for (let j = 0; j < n; j++) {
+      if (j === 0)
     }
   }
-  return dp[n]
 };
 // @lc code=end
 

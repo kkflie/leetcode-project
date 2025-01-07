@@ -16,24 +16,23 @@
  * @return {string}
  */
 var reverseStr = function(s, k) {
-  let res = ''
-  for (let i = 0; i < s.length; i += 2 * k) {
-    if (i + k >= s.length) {
-      res += reverse(s, i, s.length)
-    } else {
-      res += reverse(s, i, i + k) + s.slice(i + k, i + 2 * k)
-    }
-  } 
-  return res
   function reverse(s, start, end) {
-    let i = start, j = end - 1
-    let res = ''
-    while(i <= j) {
-      res += s[j]
+    let i = start, j = end
+    while (i <= j) {
+      [s[i], s[j]] = [s[j], s[i]]
+      i++
       j--
     }
-    return res
   }
+  const arr = s.split('')
+  for (let i = 0; i < s.length; i += 2 * k) {
+    if (i + k >= s.length) {
+      reverse(arr, i, s.length - 1)
+    } else {
+      reverse(arr, i, i + k - 1)
+    }
+  }
+  return arr.join('')
 };
 // @lc code=end
 

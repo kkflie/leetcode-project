@@ -22,23 +22,20 @@
  * @return {ListNode}
  */
 var swapPairs = function(head) {
-  if (!head) return head
-  if (!head.next) return head
-  let p = head, q = head.next, newHead = new ListNode(0, head), pre = newHead
-  while (p && p.next) {
-    p.next = q.next
-    q.next = p
-    pre.next = q
-    pre = p
-    // console.log('pre', pre)
-    p = pre.next
-    if (p) {
-      q = p.next
-    }
-    // console.log('p', p)
-    // console.log('q', q)
+  if (!head || !head.next) return head
+  let cur = head, cur2 = head.next, dummyHead = new ListNode(undefined, head), pre = dummyHead
+  while (cur && cur.next) {
+    cur2 = cur.next
+    const cur3 = cur2.next
+    cur.next = cur3
+    cur2.next = cur
+    pre.next = cur2
+    pre = cur
+    cur = cur.next
+    // if (cur) cur2 = cur.next
   }
-  return newHead.next
+  // console.log(dummyHead)
+  return dummyHead.next
 };
 // @lc code=end
 

@@ -16,16 +16,15 @@
  * @return {number}
  */
 var removeElement = function(nums, val) {
-  const n = nums.length
-  let j = 0, i = 0
-  for (; j < n;) {
-    if (nums[j] === val) {
-      j++
-      continue
+  let slow = fast = 0
+  while (fast < nums.length) {
+    if (nums[fast] !== val) {
+      nums[slow++] = nums[fast++]
+    } else {
+      fast++
     }
-    nums[i++] = nums[j++]
   }
-  return i
+  return slow
 };
 module.exports = removeElement
 // @lc code=end

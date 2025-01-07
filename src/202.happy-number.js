@@ -15,27 +15,18 @@
  * @return {boolean}
  */
 var isHappy = function(n) {
-  const mp = {}
-  let res = n
-  while(1) {
-    res = calc(res)
-    if (res === 1) {
-      return true
-    }
-    if (mp[res]) {
-      return false
-    } else {
-      mp[res] = true
-    }
-  }
-  return false
+  const set = new Set()
   function calc(n) {
-    n = n + ''
-    let res = 0
-    for (let i = 0; i < n.length; i++) {
-      res += (n[i] - 0) * (n[i] - 0)
+    return n.toString().split('')
+      .reduce((pre, cur) => pre + +(cur * cur), 0)
+  }
+  while(1) {
+    n = calc(n)
+    if (n=== 1) return true
+    if (set.has(n)) {
+      return false
     }
-    return res
+    set.add(n)
   }
 };
 // @lc code=end

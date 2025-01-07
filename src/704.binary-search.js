@@ -16,16 +16,14 @@
  * @return {number}
  */
 var search = function(nums, target) {
-  const n = nums.length
-  let left = 0, right = n - 1
-  while (left <= right) {
-    const mid = (left + right) >> 1
-    if (nums[mid] === target) {
-      return mid
-    } else if (nums[mid] < target) {
-      left = mid + 1
+  let i = 0, j = nums.length
+  while(i < j) {
+    const mid = (i + j) >> 1
+    if (nums[mid] === target) return mid
+    else if (nums[mid] > target) {
+      j = mid
     } else {
-      right = mid - 1
+      i = mid + 1
     }
   }
   return -1

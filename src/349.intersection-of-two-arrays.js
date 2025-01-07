@@ -16,23 +16,18 @@
  * @return {number[]}
  */
 var intersection = function(nums1, nums2) {
-  let i = 0, j = 0
-  const res = new Set()
-  const mp = {}
-  while (i < nums1.length) {
-    if (!mp[nums1[i]]) {
-      mp[nums1[i]] = true
-    }
-    i++
+  const set = new Set()
+  for (let i of nums1) {
+    set.add(i)
   }
 
-  while (j < nums2.length) {
-    if (mp[nums2[j]]) {
-      res.add(nums2[j])
+  const set2 = new Set()
+  for (let i of nums2) {
+    if (set.has(i)) {
+      set2.add(i)
     }
-    j++
   }
-  return Array.from(res)
+  return Array.from(set2)
 };
 // @lc code=end
 

@@ -15,19 +15,15 @@
  * @return {string}
  */
 var removeDuplicates = function(s) {
-  const stack = []
-  for (let i = 0; i < s.length; i++) {
-    if (stack.length > 1 && stack[stack.length - 1] === stack[stack.length - 2]) {
-      stack.pop()
-      stack.pop()
+  const st = []
+  for (let i of s) {
+    if (st[st.length - 1] !== i) {
+      st.push(i)
+    } else {
+      st.pop()
     }
-    stack.push(s[i])
   }
-  if (stack.length > 1 && stack[stack.length - 1] === stack[stack.length - 2]) {
-    stack.pop()
-    stack.pop()
-  }
-  return stack.join('')
+  return st.join('')
 };
 // @lc code=end
 

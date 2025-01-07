@@ -12,48 +12,70 @@
 // @lc code=start
 
 var MyQueue = function() {
-  this.stackIn = []
-  this.stackOut = []
+    this.st1 = []
+    this.st2 = []
 };
+
+MyQueue.prototype.log = function(fnName) {
+  // console.log(fnName, this)
+}
 
 /** 
  * @param {number} x
  * @return {void}
  */
 MyQueue.prototype.push = function(x) {
-  this.stackIn.push(x)
+    if (!this.st1.length) {
+      this.st1.push(x)
+    } else {
+      this.st2.push(x)
+    }
+    this.log('push')
 };
 
 /**
  * @return {number}
  */
 MyQueue.prototype.pop = function() {
-  if (this.stackOut.length) {
-    return this.stackOut.pop()
-  }
-  while(this.stackIn.length) {
-    this.stackOut.push(this.stackIn.pop())
-  }
-  return this.stackOut.pop()
+  let top = null
+  if (this.st1.length) {
+    top = this.st1.pop()
+    if (this.st2.length) {
+      while (this.st2.length) {
+        this.st1.push(this.st2.pop())
+      }
+      const newTop = this.st1.pop()
+      while (this.st1.length) {
+        this.st2.push(this.st1.pop())
+      }
+      this.st1.push(newTop)
+      // [this.st1, this.st2] = [this.st2, this.st1]
+    }
+  } 
+  this.log('pop')
+  return top
 };
 
 /**
  * @return {number}
  */
 MyQueue.prototype.peek = function() {
-  const x = this.pop()
-  this.stackOut.push(x)
-  return x
+  let top = null
+  if (this.st1.length) {
+    top = this.st1[0]
+  } 
+  this.log('peek')
+  return top
 };
 
 /**
  * @return {boolean}
  */
 MyQueue.prototype.empty = function() {
-  return !this.stackIn.length  && !this.stackOut.length
+  return this.st1.length === 0
 };
 
-/**
+/** 
  * Your MyQueue object will be instantiated and called as such:
  * var obj = new MyQueue()
  * obj.push(x)

@@ -16,38 +16,26 @@
  * @return {number}
  */
 var strStr = function(haystack, needle) {
-  // review
-  const next = []
-  getNext(next, needle)
-  let j = -1
-  for (let i = 0; i < haystack.length; i++) {
-    while (j >= 0 && haystack[i] !== needle[j + 1]) {
-      j = next[j]
-    }
-    if (haystack[i] === needle[j + 1]) {
-      j++
-    }
-    if (j === needle.length - 1) {
-      return i - needle.length + 1
+  let pre = 0,
+    after = 0;
+  while (after < needle.length && pre < haystack.length) {
+    // pre代表需要从哪里开始比较
+    if (haystack[after + pre] === needle[after]) {
+      after++;
+    } else {
+    // 如果发现不想等应该剔除掉haystack之前的字符
+      pre++;
+    // 不相等剔除后，重新开始便利after
+      after = 0;
     }
   }
-  return -1
-  function getNext(next, s) {
-    let j = -1
-    const n = s.length
-    next[0] = j
-    for (let i = 1; i < n; i++) {
-      while(j >= 0 && s[i] !== s[j + 1]) {
-        j = next[j]
-      }
-      if (s[i] === s[j + 1]) {
-        j++
-      }
-      next[i] = j
-    }
-  }
+  return after === needle.length ? pre : -1;
 };
 // @lc code=end
+
+// console.log(strStr('babbbbbabb', 'bbab'))
+
+// strStr('sadbutsad', 'abababca')
 
 
 

@@ -18,21 +18,22 @@
  * @return {number}
  */
 var fourSumCount = function(nums1, nums2, nums3, nums4) {
-  const dic = new Map
-  let res = 0
-  for (const n1 of nums1) {
-    for (const n2 of nums2) {
-      const sum = n1 + n2
-      dic.set(sum, (dic.get(sum) || 0) + 1)
+  const map = {}
+  for (let i of nums1) {
+    for (let j of nums2) {
+      map[i + j] = (map[i + j] || 0) + 1
     }
   }
-  for (const n3 of nums3) {
-    for (const n4 of nums4) {
-      const sum = n3 + n4
-      res += dic.get(0 - sum) || 0
+  let count = 0
+  for (let i of nums3) {
+    for (let j of nums4) {
+      const sum = i + j
+      if (map[-sum] !== undefined) {
+        count +=map[-sum]
+      }
     }
   }
-  return res
+  return count
 };
 // @lc code=end
 

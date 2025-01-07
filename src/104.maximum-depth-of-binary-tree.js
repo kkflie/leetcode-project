@@ -24,18 +24,32 @@
  */
 var maxDepth = function(root) {
   if (!root) return 0
-  let n = 0
-  const queue = [root]
-  while(queue.length) {
-    const len = queue.length
-    n++
-    for (let i = 0; i < len; i++) {
-      const node = queue.shift()
-      if (node.left) queue.push(node.left)
-      if (node.right) queue.push(node.right)
-    }
-  }
-  return n
+  // 递归
+  // return 1 + Math.max(maxDepth(root.left), maxDepth(root.right))
+  // 递归 前序遍历
+  // let maxDepth = 1
+  // getDepth(root, maxDepth)
+  // return maxDepth
+  // function getDepth(root, depth) {
+  //   if (!root) return
+  //   maxDepth = Math.max(maxDepth, depth)
+  //   getDepth(root.left, depth + 1)
+  //   getDepth(root.right, depth + 1)
+  // }
+
+  // 迭代
+  // let maxDepth = 0
+  // const q = [root]
+  // while(q.length) {
+  //   maxDepth++
+  //   const len = q.length
+  //   for (let i = 0; i < len; i++) {
+  //     const node = q.shift()
+  //     if (node.left) q.push(node.left)
+  //     if (node.right) q.push(node.right)
+  //   }
+  // }
+  // return maxDepth
 };
 // @lc code=end
 

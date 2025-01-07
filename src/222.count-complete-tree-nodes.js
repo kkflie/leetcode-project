@@ -24,15 +24,20 @@
  */
 var countNodes = function(root) {
   if (!root) return 0
-  const stack = [root]
-  let n = 0
-  while(stack.length) {
-    n++
-    const node = stack.pop()
-    if (node.right) stack.push(node.right)
-    if (node.left) stack.push(node.left)
+  let leftDepth = rightDepth = 0
+  let left = root.left, right = root.right
+  while (left) {
+    left = left.left
+    leftDepth++
   }
-  return n
+  while (right) {
+    right = right.right
+    rightDepth++
+  }
+  if (leftDepth === rightDepth) {
+    return (2 << leftDepth) - 1
+  }
+  return 1 + countNodes(root.left) + countNodes(root.right)
 };
 // @lc code=end
 

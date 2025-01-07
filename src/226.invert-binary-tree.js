@@ -23,13 +23,23 @@
  * @return {TreeNode}
  */
 var invertTree = function(root) {
+  // 递归
+  // if (!root) return root
+  // invertTree(root.left)
+  // invertTree(root.right)
+  // const temp = root.left
+  // root.left = root.right
+  // root.right = temp
+  // return root
+
+  // 迭代
   if (!root) return root
   const stack = [root]
   while (stack.length) {
     const node = stack.pop()
     swap(node)
-    if (node.right) stack.push(node.right)
     if (node.left) stack.push(node.left)
+    if (node.right) stack.push(node.right)
   }
   return root
   function swap(node) {

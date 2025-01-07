@@ -24,22 +24,27 @@
  * @return {boolean}
  */
 var isSameTree = function(p, q) {
-  const path1 = []
-  const path2 = []
-  traversal(p, path1)
-  traversal(q, path2)
-  // console.log('p', path1)
-  // console.log('q', path2)
-  return path1.every((e, i) => e === path2[i])
-  function traversal(p, arr) {
-    if (!p) {
-      arr.push(null)
-      return
-    }
-    arr.push(p.val)
-    traversal(p.left, arr)
-    traversal(p.right, arr)
+  // 递归
+  // return compare(p, q)
+  // function compare(p, q) {
+  //   if (!p && !q) return true
+  //   if (!p || !q || (p.val !== q.val)) return false
+  //   return compare(p.left, q.left) && compare(p.right, q.right)
+  // }
+
+  // 迭代
+  const st = [p, q]
+  while(st.length) {
+    p = st.pop()
+    q = st.pop()
+    if (!p && !q) continue
+    if (!p || !q || (p.val !== q.val)) return false
+    st.push(p.left)
+    st.push(q.left)
+    st.push(p.right)
+    st.push(q.right)
   }
+  return true
 };
 // @lc code=end
 

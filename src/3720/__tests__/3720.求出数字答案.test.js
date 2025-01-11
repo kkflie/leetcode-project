@@ -1,4 +1,4 @@
-const generateKey = require('../3270')
+import { generateKey } from '../3270'
 
 describe('3720.求出数字答案', () => {
   test('case 1', () => {

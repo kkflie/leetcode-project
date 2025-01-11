@@ -24,25 +24,12 @@
  * @return {boolean}
  */
 var hasPathSum = function(root, targetSum) {
-  if (!root) return false
-  return traverse([], root)
-  function traverse(line, root) {
-    if (!root.left && !root.right) {
-      return line.concat(root.val).reduce((a, b) => a + b, 0) === targetSum
-    }
-    if (root.right) {
-      const res = traverse(line.concat(root.val), root.right)
-      if (res) {
-        return res
-      }
-    }
-    if (root.left) {
-      const res = traverse(line.concat(root.val), root.left)
-      if (res) {
-        return res
-      }
-    }
-    return false
+  return traverse(root, 0)
+  function traverse(root, sum) {
+    if (!root) return false
+    return !root.left && !root.right && (sum + root.val === targetSum) ||
+    traverse(root.left, sum + root.val) ||
+    traverse(root.right, sum + root.val)
   }
 };
 // @lc code=end

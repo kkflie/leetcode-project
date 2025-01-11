@@ -27,13 +27,12 @@ var binaryTreePaths = function(root) {
   const res = []
   function traverse(line, root) {
     if (!root.left && !root.right) {
-      res.push(line.concat(root.val).join('->'))
-      return
+      res.push(line)
     }
-    root.left && traverse(line.concat(root.val), root.left)
-    root.right && traverse(line.concat(root.val), root.right)
+    root.left && traverse(line + `->${root.left.val}`, root.left)
+    root.right && traverse(line + `->${root.right.val}`, root.right)
   }
-  traverse([], root)
+  traverse(root.val + '', root)
   return res
 };
 // @lc code=end

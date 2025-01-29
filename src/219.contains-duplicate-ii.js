@@ -16,28 +16,15 @@
  * @return {boolean}
  */
 var containsNearbyDuplicate = function(nums, k) {
-  let map = {}
-  nums.forEach((e, i) => {
-    if (!map[e]) {
-      map[e] = []
+  const n = nums.length
+  const map = new Map()
+  for (let i = 0; i < n; i++) {
+    const num = nums[i]
+    if (map.has(num)) {
+      const preIdx = map.get(num)
+      if (i - preIdx <= k) return true
     }
-    map[e].push(i)
-  })
-  Object.entries(map).forEach((e) => {
-    if (e[1].length < 2) {
-      delete map[e[0]]
-    }
-  })
-  const values = Object.values(map)
-  for (let arr of values) {
-    let l = 0, r = l + 1
-    while (r < arr.length) {
-      if (arr[r]- arr[l] <= k) {
-        return true
-      }
-      l++
-      r = l + 1
-    }
+    map.set(num, i)
   }
   return false
 };
@@ -59,4 +46,4 @@ var containsNearbyDuplicate = function(nums, k) {
 // @lcpr case=end
 
  */
-
+p

@@ -1,5 +1,5 @@
 // 最小堆
-class MinHeap {
+export class MinHeap {
   heap = []
   constructor (arr = []) {
     arr.forEach(e => {
@@ -23,6 +23,7 @@ class MinHeap {
   }
 
   push(val) {
+    console.log(this.heap)
     this.heap.push(val)
     this.shiftUp(this.length - 1)
   }
@@ -37,6 +38,8 @@ class MinHeap {
     this.shiftDown(0)
     return val
   }
+
+
 
   swap(x, y) {
     [this.heap[x], this.heap[y]] = [this.heap[y], this.heap[x]]
@@ -68,7 +71,8 @@ class MinHeap {
       }
       if (minIndex === index) return
       this.swap(index, minIndex)
-      this.shiftDown(minIndex)
+      index = minIndex
+      // this.shiftDown(minIndex)
     }
   }
 }
@@ -85,7 +89,3 @@ class MinHeap {
 // console.log('after push 1 :' + heap)
 // console.log('top: ', heap.top)
 // console.log('bottom: ', heap.bottom)
-
-module.exports = {
-  MinHeap
-}

@@ -28,11 +28,9 @@ var trimBST = function(root, low, high) {
   // review
   if (!root) return null
   if (root.val < low) {
-    pre = root
     return trimBST(root.right, low, high)
   }
   if (root.val > high) {
-    pre = root
     return trimBST(root.left, low, high)
   }
   root.left = trimBST(root.left, low, high) 

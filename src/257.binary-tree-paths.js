@@ -23,16 +23,21 @@
  * @return {string[]}
  */
 var binaryTreePaths = function(root) {
-  if (!root) return []
   const res = []
-  function traverse(line, root) {
-    if (!root.left && !root.right) {
-      res.push(line)
+
+  function backTrack(root, path) {
+    if (!root) {
+      return
     }
-    root.left && traverse(line + `->${root.left.val}`, root.left)
-    root.right && traverse(line + `->${root.right.val}`, root.right)
+    if (!root.left && !root.right) {
+      res.push(path.concat(root.val).join('->'))
+      return
+    }
+    backTrack(root.left, path.concat(root.val))
+    backTrack(root.right, path.concat(root.val))
   }
-  traverse(root.val + '', root)
+
+  backTrack(root, [])
   return res
 };
 // @lc code=end

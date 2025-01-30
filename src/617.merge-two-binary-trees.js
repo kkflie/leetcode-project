@@ -24,12 +24,37 @@
  * @return {TreeNode}
  */
 var mergeTrees = function(root1, root2) {
-  // review
+  // 递归
+  // if (!root1) return root2
+  // if (!root2) return root1
+  // root1.val = root1.val + root2.val
+  // root1.left = mergeTrees(root1.left, root2.left)
+  // root1.right = mergeTrees(root1.right, root2.right)
+  // return root1
+
+  // 迭代
   if (!root1) return root2
   if (!root2) return root1
-  root1.val += root2.val
-  root1.left = mergeTrees(root1.left, root2.left)
-  root1.right = mergeTrees(root1.right, root2.right)
+  const q = [root1, root2]
+  while (q.length) {
+    const n1 = q.shift()
+    const n2 = q.shift()
+    n1.val += n2.val
+    if (n1.left && n2.left) {
+      q.push(n1.left)
+      q.push(n2.left)
+    }
+    if (n1.right && n2.right) {
+      q.push(n1.right)
+      q.push(n2.right)
+    }
+    if (!n1.left && n2.left) {
+      n1.left = n2.left
+    }
+    if (!n1.right && n2.right) {
+      n1.right = n2.right
+    }
+  }
   return root1
 };
 // @lc code=end

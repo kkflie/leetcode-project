@@ -23,20 +23,19 @@
  * @return {number}
  */
 var getMinimumDifference = function(root) {
-  const res = []
-  function traverse(root) {
+  let diff = Number.MAX_SAFE_INTEGER
+  let pre = null
+  traversal(root)
+  function traversal(root) {
     if (!root) return
-    traverse(root.left)
-    res.push(root.val)
-    traverse(root.right)
+    traversal(root.left)
+    if (pre) {
+      diff = Math.min(diff, root.val - pre.val)
+    }
+    pre = root
+    traversal(root.right)
   }
-  traverse(root)
-  let min = Number.MAX_SAFE_INTEGER
-  for (let i = 1; i < res.length; i++) {
-    const val = res[i] - res[i - 1]
-    min = min > val ? val : min
-  }
-  return min
+  return diff
 };
 // @lc code=end
 

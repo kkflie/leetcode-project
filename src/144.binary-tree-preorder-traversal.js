@@ -23,6 +23,9 @@
  * @return {number[]}
  */
 var preorderTraversal = function(root) {
+  const res = []
+  traversal(root)    
+  return res
   // 递归
   // function traversal(root) {
   //   if (!root) return
@@ -32,37 +35,34 @@ var preorderTraversal = function(root) {
   // }
 
   // 迭代1
-  function traversal(root) {
-    if (!root) return
-    const st = [root]
-    while(st.length) {
-      const node = st.pop()
-      res.push(node.val)
-      if (node.right) st.push(node.right)
-      if (node.left) st.push(node.left)
-    }
-  }
-
-  // 迭代2
   // function traversal(root) {
   //   if (!root) return
   //   const st = [root]
   //   while(st.length) {
-  //     let node = st.pop()
-  //     if (node) {
-  //       if (node.right) st.push(node.right)
-  //       if (node.left) st.push(node.left)
-  //         st.push(node)
-  //         st.push(null)
-  //     } else {
-  //       node = st.pop()
-  //       res.push(node.val)
-  //     }
+  //     const node = st.pop()
+  //     res.push(node.val)
+  //     if (node.right) st.push(node.right)
+  //     if (node.left) st.push(node.left)
   //   }
   // }
-  const res = []
-  traversal(root)    
-  return res
+
+  // 迭代2
+  function traversal(root) {
+    if (!root) return
+    const st = [root]
+    while (st.length) {
+      let node = st.pop()
+      if (node){
+        if (node.right) st.push(node.right)
+        if (node.left) st.push(node.left)
+        st.push(node)
+        st.push(null)
+      } else {
+        node = st.pop()
+        res.push(node.val)
+      }
+    }
+  }
 };
 // @lc code=end
 

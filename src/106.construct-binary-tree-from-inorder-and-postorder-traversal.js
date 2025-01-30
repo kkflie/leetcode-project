@@ -24,11 +24,10 @@
  * @return {TreeNode}
  */
 var buildTree = function(inorder, postorder) {
-  // review
-  if (!inorder.length) return null;
-  const rootVal = postorder.pop() 
-  const idx = inorder.indexOf(rootVal)
+  if (!inorder.length) return null
+  const rootVal = postorder.pop()
   const root = new TreeNode(rootVal)
+  const idx = inorder.findIndex((e) => e === rootVal)
   root.left = buildTree(inorder.slice(0, idx), postorder.slice(0, idx))
   root.right = buildTree(inorder.slice(idx + 1), postorder.slice(idx))
   return root

@@ -24,64 +24,68 @@
  * @return {TreeNode}
  */
 var deleteNode = function(root, key) {
-  if (!root) return root
-  // review
-  let dummyNode = new TreeNode(root.val, root), pre = dummyNode
-  traverse(root, key)
-  function traverse(root, key) {
-    if (!root) return
-    if (root.val < key) {
-      pre = root
-      traverse(root.right, key)
-      return
-    }
-    if (root.val > key) {
-      pre = root
-      traverse(root.left, key)
-      return
-    }
-    if (!root.left && !root.right) {
-      if (pre.val >= key) {
-        pre.left = null
-      } else {
-        pre.right = null
-      }
-      return
-    }
-    if (!root.left) {
-      if (key > pre.val) {
-        pre.right = root.right
-      } else {
-        pre.left = root.right
-      }
-      return
-    }
-    if (!root.right) {
-      if (key > pre.val) {
-        pre.right = root.left
-      } else {
-        pre.left = root.left
-      }
-      return
-    }
-    if (key > pre.val) {
-      pre.right = root.right
-    } else {
-      // console.log('pre', pre.val, root.val)
-      pre.left = root.right
-    }
-    const left = root.left
+  // 递归1
+  // if (!root) return root
+  // if (root.val < key) root.right = deleteNode(root.right, key)
+  // else if (root.val > key) root.left = deleteNode(root.left, key)
+  // else {
+  //   if (!root.left && !root.right) return null 
+  //   if (!root.left) {
+  //     return root.right
+  //   }
+  //   if (!root.right) {
+  //     return root.left
+  //   } 
+  //   let cur = root.right
+  //   while (cur.left) {
+  //     cur = cur.left
+  //   }
+  //   cur.left = root.left
+  //   root = root.right
+  //   return root
+  // }
+  // return root
+
+  //递归2 非二叉搜索树
+  // if (!root) return root
+  // if (root.val === key) {
+  //   if (!root.right) {
+  //     return root.left
+  //   }
+  //   let cur = root.right
+  //   while (cur.left) {
+  //     cur = cur.left
+  //   }
+  //   const temp = root.val
+  //   root.val = cur.val
+  //   cur.val = temp
+  // }
+  // root.left = deleteNode(root.left, key)
+  // root.right = deleteNode(root.right, key)
+  // return root
+
+  // 迭代
+  function deleteOneNode(root) {
+    if (!root) return root
+    if (!root.right) return root.left
     let cur = root.right
-    while(cur) {
-      pre = cur
-      cur = cur.left
-    }
-    // console.log('pre-2', pre)
-    pre.left = left
-    return
-    // console.log(root.val)
+    while (cur.left) cur = cur.left
+    cur.left = root.left
+    return root.right
   }
-  return dummyNode.left
+
+  if (!root) return root
+  let cur = root, pre
+  while (cur) {
+    if (cur.val === key) break
+    pre = cur
+    if (cur.val > key) cur = cur.left
+    else cur = cur.right
+  }
+  if (!pre) return deleteOneNode(cur)
+  if (pre.left && pre.left.val === key) pre.left = deleteOneNode(pre.left)
+  if (pre.right && pre.right.val === key) pre.right = deleteOneNode(pre.right)
+  return root
 };
 // @lc code=end
 

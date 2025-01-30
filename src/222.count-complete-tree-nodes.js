@@ -24,15 +24,15 @@
  */
 var countNodes = function(root) {
   if (!root) return 0
+  let { left, right } = root
   let leftDepth = rightDepth = 0
-  let left = root.left, right = root.right
   while (left) {
-    left = left.left
     leftDepth++
+    left = left.left
   }
   while (right) {
-    right = right.right
     rightDepth++
+    right = right.right
   }
   if (leftDepth === rightDepth) {
     return (2 << leftDepth) - 1

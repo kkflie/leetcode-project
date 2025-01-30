@@ -29,15 +29,16 @@ var binaryTreePaths = function(root) {
     if (!root) {
       return
     }
+    path += root.val
     if (!root.left && !root.right) {
-      res.push(path.concat(root.val).join('->'))
+      res.push(path)
       return
     }
-    backTrack(root.left, path.concat(root.val))
-    backTrack(root.right, path.concat(root.val))
+    backTrack(root.left, path + '->')
+    backTrack(root.right, path + '->')
   }
 
-  backTrack(root, [])
+  backTrack(root, '')
   return res
 };
 // @lc code=end

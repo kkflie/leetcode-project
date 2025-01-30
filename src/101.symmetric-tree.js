@@ -34,18 +34,18 @@ var isSymmetric = function(root) {
   // }
 
   // 迭代
-  const arr = [root.left, root.right]
-  while (arr.length) {
-    const left = arr.pop()
-    const right = arr.pop()
-    if (!left && !right) continue
-    if (!left || !right || (left.val !== right.val)) return false
-    arr.push(left.left)
-    arr.push(right.right)
-    arr.push(left.right)
-    arr.push(right.left)
-  }
-  return true
+  // const arr = [root.left, root.right]
+  // while (arr.length) {
+  //   const left = arr.pop()
+  //   const right = arr.pop()
+  //   if (!left && !right) continue
+  //   if (!left || !right || (left.val !== right.val)) return false
+  //   arr.push(left.left)
+  //   arr.push(right.right)
+  //   arr.push(left.right)
+  //   arr.push(right.left)
+  // }
+  // return true
 };
 // @lc code=end
 

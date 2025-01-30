@@ -23,23 +23,15 @@
  * @return {boolean}
  */
 var isBalanced = function(root) {
-  // 递归
-  // if (!root) return true
   function getHeight(root) {
     if (!root) return 0
     const lh = getHeight(root.left)
-    if (!~lh) return -1
     const rh = getHeight(root.right)
-    if (!~rh) return -1
+    if (lh === -1 || rh === -1) return -1
     if (Math.abs(lh - rh) > 1) return -1
-    return Math.max(lh, rh) + 1 
+    return 1 + Math.max(lh, rh)
   }
-
-  // const lh = getHeight(root.left)
-  // const rh = getHeight(root.right)
-  // if (Math.abs(lh - rh) > 1) return false
-  // return isBalanced(root.left) && isBalanced(root.right)
-  return !~getHeight(root) ? false : true
+  return getHeight(root) === -1 ? false : true 
 };
 // @lc code=end
 

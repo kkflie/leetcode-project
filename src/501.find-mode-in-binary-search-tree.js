@@ -23,35 +23,30 @@
  * @return {number[]}
  */
 var findMode = function(root) {
-  // review
   const res = []
   let maxCount = 0
-  let count = 0, pre, cur = root
-  const st = []
-  while(cur || st.length) {
-    if (cur) {
-      st.push(cur)
-      cur = cur.left
-    } else {
-      cur = st.pop()
-      // console.log(cur.val)
-      if (!pre || pre.val !== cur.val) {
-        count = 1
-      } else {
-        count++
-      }
-      pre = cur
-      if (count === maxCount) {
-        res.push(cur.val)
-      }
+  let count = 0
+  let pre
+  function traversal(root) {
+    if (!root) return
+    traversal(root.left)
+    if (!pre) {
+      count++
+      maxCount = count
+    } else if (pre.val === root.val) {
+      count++
       if (count > maxCount) {
         res.length = 0
-        res.push(cur.val)
         maxCount = count
       }
-      cur = cur.right
+    } else {
+      count = 1
     }
+    if (count >= maxCount) res.push(root.val)
+    pre = root
+    traversal(root.right)
   }
+  traversal(root)
   return res
 };
 // @lc code=end

@@ -25,11 +25,9 @@
 var invertTree = function(root) {
   // 递归
   // if (!root) return root
-  // invertTree(root.left)
-  // invertTree(root.right)
-  // const temp = root.left
-  // root.left = root.right
-  // root.right = temp
+  // let left = root.left
+  // root.left = invertTree(root.right)
+  // root.right = invertTree(left)
   // return root
 
   // 迭代

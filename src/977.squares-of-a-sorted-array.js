@@ -15,15 +15,17 @@
  * @return {number[]}
  */
 var sortedSquares = function(nums) {
-  nums = nums.map((n) => n * n)
+  const n = nums.length
+  for (let i = 0; i < n; i++) {
+    nums[i] = nums[i] * nums[i]
+  }
+  let i = 0, j = n - 1, k = n - 1
   const res = []
-  let k = nums.length - 1
-  let i = 0, j = nums.length - 1
-  while (i <= j) {
-    if (nums[i] < nums[j]) {
-      res[k--] = nums[j--]
+  while (k >= 0) {
+    if (nums[i] > nums[j]) {
+      res[k--] = nums[i++] 
     } else {
-      res[k--] = nums[i++]
+      res[k--] = nums[j--]
     }
   }
   return res

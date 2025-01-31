@@ -16,33 +16,23 @@
  * @return {boolean}
  */
 var backspaceCompare = function(s, t) {
-  const st = []
-  const st2 = []
-  for (let i = 0; i < s.length; i++) {
-    if (s[i] !== '#') {
-      st.push(s[i])
-    } else {
-      st.pop()
+  function getFinalString(s) {
+    s = s.split('')
+    const n = s.length
+    let i = j = 0
+    while (j < n) {
+      if (s[j] !== '#') {
+        s[i++] = s[j++] 
+      } else {
+        j++
+        if (i > 0) i--
+      }
     }
+    return s.slice(0, i).join('')
   }
-  // const str1 = st.join('')
-  st2.length = 0
-  for (let i = 0; i < t.length; i++) {
-    if (t[i] !== '#') {
-      st2.push(t[i])
-    } else {
-      st2.pop()
-    }
-  }
-  if (st.length !== st2.length)return false
-  for (let i = 0;i < st.length;i++) {
-    if(st[i]!==st2[i]){
-      return false
-    }
-  }
-  return true
-  // const str2 = st.join('')
-  // return str1 === str2
+  const s2 = getFinalString(s)
+  const t2 = getFinalString(t)
+  return s2 === t2
 };
 // @lc code=end
 

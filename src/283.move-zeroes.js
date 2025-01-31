@@ -17,15 +17,16 @@
 var moveZeroes = function(nums) {
   // review
   const n = nums.length
-  let i = 0, j = 0
-  while(j < n) {
-    if(nums[j] !== 0) {
-      nums[i++]=nums[j]
+  let i = j = 0
+  while (j < n) {
+    if (nums[j] !== 0) {
+      nums[i++] = nums[j++]
+    } else {
+      j++
     }
-    j++
   }
-  while(i < n) {
-    nums[i++]=0
+  while (i < n) {
+    nums[i++] = 0
   }
 };
 // @lc code=end

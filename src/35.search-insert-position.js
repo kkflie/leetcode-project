@@ -16,27 +16,14 @@
  * @return {number}
  */
 var searchInsert = function(nums, target) {
-  let left = 0
-  const len = nums.length
-  let right = len - 1
-  if (nums[len - 1] === target) {
-    return len - 1
-  } else if (nums[len - 1] < target) {
-    return len
-  } else if (nums[0] >= target) {
-    return 0
+  let i = 0, j = nums.length
+  while (i < j) {
+    const mid = (i + j) >> 1, num = nums[mid]
+    if (num === target) return mid
+    else if (num > target) j = mid
+    else i = mid + 1
   }
-  while (left <= right) {
-    const middle = Math.floor((right - left) / 2) + left
-    if (nums[middle] === target) {
-      return middle
-    } else if (nums[middle] > target) {
-      right = middle - 1
-    } else {
-      left = middle + 1
-    }
-  }
-  return left
+  return i
 };
 // @lc code=end
 

@@ -16,54 +16,39 @@
  * @return {string}
  */
 var minWindow = function(s, t) {
-  // review
-  const ori = {}
-  const cnt = {}
-  let l = 0, r = -1, min = Number.MAX_SAFE_INTEGER
-  let ansL = -1
-  let ansR = -1
-  
+  const sa = new Array(128).fill(0)
+  const ta = new Array(128).fill(0)
   for (let i = 0; i < t.length; i++) {
-    if (!ori[t[i]]) {
-      ori[t[i]] = 0
-    }
-    ori[t[i]]++
+    ta[t.charCodeAt(i)]++
   }
-  while (r < s.length) {
-    r++
-    if (ori[s[r]]) {
-      if (!cnt[s[r]]) {
-        cnt[s[r]] = 0
-      }
-      cnt[s[r]]++
+  let slow = 0
+  let minLen = s.length + 1
+  function check(sa, ta) {
+    let flag = true
+    for (let i = 0; i < ta.length; i++) {
+      if (ta[i] === 0) continue
+      if (ta[i] > sa[i]) return false
     }
-    while(check() && l <= r) {
-      if (min > (r - l + 1)) {
-        min = r - l + 1
-        ansL = l
-        ansR = r
+    return flag
+  }
+  let start = 0, end = -1
+  for (let i = 0; i < s.length; i++) {
+    sa[s.charCodeAt(i)]++
+    if (sa[s.charCodeAt(i)] < ta[s.charCodeAt(i)]) continue
+    while (check(sa, ta)) {
+      if (minLen > (i - slow + 1)) {
+        minLen = i - slow + 1
+        start = slow
+        end = i
       }
-      if (cnt[s[l]]) {
-        cnt[[s[l]]]--
-      }
-      l++
+      const idx = s[slow].charCodeAt(0)
+      sa[idx]--
+      slow++
+      if (sa[idx] < ta[idx]) break
     }
   }
-
-  if (ansL < 0) {
-    return ''
-  }
-  return s.slice(ansL, ansR + 1)
-
-  function check() {
-    const keys = Object.keys(ori)
-    for (let key of keys) {
-      if (!cnt[key] || cnt[key] < ori[key]) {
-        return false
-      }
-    }
-    return true
-  }
+  if (start > end) return ''
+  return s.substring(start, end + 1)
 };
 // @lc code=end
 

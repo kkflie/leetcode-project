@@ -23,12 +23,11 @@
  */
 var reverseList = function(head) {
   let pre = null
-  let node = head
-  while(node) {
-    let temp = node.next
-    node.next = pre
-    pre = node
-    node = temp
+  while (head) {
+    const tmp = head.next
+    head.next = pre
+    pre = head
+    head = tmp
   }
   return pre
 };

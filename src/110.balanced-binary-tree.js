@@ -23,12 +23,17 @@
  * @return {boolean}
  */
 var isBalanced = function(root) {
-  // review
+  // 递归
   if (!root) return true
-  return Math.abs(height(root.left) - height(root.right)) <= 1 && isBalanced(root.left) && isBalanced(root.right)
-  function height(root) {
+  const leftHeight = getHeight(root.left)
+  const rightHeight = getHeight(root.right)
+  if (Math.abs(leftHeight - rightHeight) > 1) {
+    return false
+  }
+  return isBalanced(root.left) && isBalanced(root.right)
+  function getHeight(root) {
     if (!root) return 0
-    return Math.max(height(root.left), height(root.right)) + 1
+    return 1 + Math.max(getHeight(root.left), getHeight(root.right))
   }
 };
 // @lc code=end

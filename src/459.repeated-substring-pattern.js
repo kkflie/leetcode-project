@@ -15,17 +15,15 @@
  * @return {boolean}
  */
 var repeatedSubstringPattern = function(s) {
-  const next = getNext(s), n = s.length
-  const m = next.length
-  if (next[m - 1] !== -1 && n % (n - ((next[m - 1]) + 1)) === 0) {
-    return true
-  }
-  return false
+  // solution 1
+  // const s2 = (s + s).substring(1, 2 * s.length - 1)
+  // return ~(s2.indexOf(s))
 
+  // solution 2 kmp
   function getNext(s) {
-    const next = [-1], n = s.length
     let j = -1
-    for (let i = 1; i < n; i++) {
+    const next = [j]
+    for (let i = 1; i < s.length; i++) {
       while (j >= 0 && s[i] !== s[j + 1]) {
         j = next[j]
       }
@@ -36,6 +34,12 @@ var repeatedSubstringPattern = function(s) {
     }
     return next
   }
+  const next = getNext(s)
+  const len = s.length
+  if (next[len - 1] !== -1 && s.length % (len - (next[len - 1] + 1)) === 0) {
+    return true
+  }
+  return false
 };
 // @lc code=end
 

@@ -15,31 +15,20 @@
  * @return {boolean}
  */
 var isValid = function(s0) {
-  if (s0.length < 2) {
-    return false
-  }
-  const stack = []
-  const s = s0
-  const dic = {
-    ')': '(',
-    ']': '[',
-    '}': '{',
-  }
-  const startList = ['(', '[', '{']
-  let i = 0
-  while(i < s.length) {
-    const w = s[i]
-    if (startList.includes(w)) {
-      stack.push(w)
-    } else {
-      const p = stack.pop()
-      if (p !== dic[w]) {
-        return false
-      }
+  if (s0.length % 2) return false
+  const st = []
+  for (const i of s0) {
+    if (i === '(') {
+      st.push(')')
+    } else if (i === '[') {
+      st.push(']')
+    } else if (i === '{') {
+      st.push('}')
+    } else if (st.pop() !== i) {
+      return false
     }
-    i++
   }
-  return stack.length === 0
+  return !st.length
 };
 module.exports = isValid
 // @lc code=end

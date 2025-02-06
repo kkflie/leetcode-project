@@ -15,32 +15,34 @@
  * @return {number}
  */
 var evalRPN = function(tokens) {
-  const n = tokens.length
+  if (tokens.length < 3) return +tokens.pop()
+  function isNumber(c) {
+    return !isNaN(+c)
+  }
+
+  function calc(a, b, operator) {
+    switch (operator) {
+      case '+':
+        return +a + +b
+      case '-':
+        return a - b
+      case '*':
+        return a * b
+      case '/':
+        return +((a / b).toString().split('.')[0])
+    }
+  }
+
   const st = []
-  for (let i = 0; i < n; i++) {
-    if (!isNaN(tokens[i])) {
-      // 是数字
-      st.push(tokens[i])
+  for (const token of tokens) {
+    if (isNumber(token)) {
+      st.push(token)
     } else {
-      const y = st.pop() - 0
-      const x = st.pop() - 0
-      switch (tokens[i]) {
-        case '+' :
-          st.push(x + y)
-          break
-        case '-' :
-          st.push(x - y)
-          break
-        case '*' :
-          st.push(x * y)
-          break
-        case '/' :
-          const flag = x * y > 0
-          let res = Math.floor(Math.abs(x / y))
-          res = flag ? res : 0 - res
-          st.push(res)
-          break
-      }
+      const b = st.pop()
+      const a = st.pop()
+      const res = calc(a, b, token)
+      // console.log('res', res)
+      st.push(res)
     }
   }
   return st.pop()

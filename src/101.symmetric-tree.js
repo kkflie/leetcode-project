@@ -24,16 +24,28 @@
  */
 var isSymmetric = function(root) {
   if (!root) return true
-  return compare(root.left, root.right)
-  function compare(left, right) {
-    if (!left && !right) return true
-    if (!left) return false
-    if (!right) return false
-    if (left.val !== right.val) return false
-    const outside = compare(left.left, right.right)
-    const inside = compare(left.right, right.left)
-    return inside && outside
+  // 递归
+  // return compare(root.left, root.right)
+
+  // function compare(left,right) {
+  //   if (!left && !right) return true
+  //   if (!left || !right || (left.val !== right.val)) return false
+  //   return compare(left.left, right.right) && compare(left.right, right.left)
+  // }
+
+  // 迭代
+  const arr = [root.left, root.right]
+  while (arr.length) {
+    const left = arr.pop()
+    const right = arr.pop()
+    if (!left && !right) continue
+    if (!left || !right || (left.val !== right.val)) return false
+    arr.push(left.left)
+    arr.push(right.right)
+    arr.push(left.right)
+    arr.push(right.left)
   }
+  return true
 };
 // @lc code=end
 

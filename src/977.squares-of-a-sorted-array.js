@@ -15,21 +15,18 @@
  * @return {number[]}
  */
 var sortedSquares = function(nums) {
-  const n = nums.length
-  const arr = []
-  let l = 0, r = n - 1
-  while (l <= r) {
-    const a1 = nums[l] * nums[l]
-    const a2 = nums[r] * nums[r]
-    if (a2 > a1) {
-      arr.unshift(a2)
-      r--
+  nums = nums.map((n) => n * n)
+  const res = []
+  let k = nums.length - 1
+  let i = 0, j = nums.length - 1
+  while (i <= j) {
+    if (nums[i] < nums[j]) {
+      res[k--] = nums[j--]
     } else {
-      arr.unshift(a1)
-      l++
+      res[k--] = nums[i++]
     }
   }
-  return arr
+  return res
 };
 // @lc code=end
 

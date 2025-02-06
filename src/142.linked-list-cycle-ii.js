@@ -23,22 +23,20 @@
  * @return {ListNode}
  */
 var detectCycle = function(head) {
-  // review
-  if (!head) return null
-  let slow = head, fast = head, pre
-  while(fast && fast.next) {
-    pre = slow
+  let slow = fast = head
+  while (fast && fast.next) {
     slow = slow.next
     fast = fast.next.next
-    
     if (slow === fast) {
-      while (head !== fast) {
-        head = head.next
-        fast = fast.next
+      let index1 = slow
+      let index2 = head
+      while (index1 !== index2) {
+        index1 = index1.next
+        index2 = index2.next
       }
-      return fast
+      return index2
     }
-  } 
+  }
   return null
 };
 // @lc code=end

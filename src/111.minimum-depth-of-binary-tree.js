@@ -24,19 +24,26 @@
  */
 var minDepth = function(root) {
   if (!root) return 0
-  let n = 0
-  const queue = [root]
-  while(queue.length) {
-    const len = queue.length
-    n++
+  // 递归
+  // if (!root.left && !root.right) return 1
+  // if (!root.left) return 1 + minDepth(root.right)
+  // if (!root.right) return 1 + minDepth(root.left)
+  // return 1 + Math.min(minDepth(root.left), minDepth(root.right))
+
+  // 迭代
+  const q = [root]
+  let depth = 0
+  while(q.length) {
+    depth++
+    const len = q.length
     for (let i = 0; i < len; i++) {
-      const node = queue.shift()
-      if (!node.left && !node.right) return n
-      if (node.left) queue.push(node.left)
-      if (node.right) queue.push(node.right)
+      const p = q.shift()
+      if (!p.left && !p.right) return depth
+      if (p.left) q.push(p.left) 
+      if (p.right) q.push(p.right) 
     }
   }
-  return n
+  return 1
 };
 // @lc code=end
 

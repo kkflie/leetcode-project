@@ -17,18 +17,14 @@
  */
 var canConstruct = function(ransomNote, magazine) {
   if (ransomNote.length > magazine.length) return false
-  const mp = new Map()
-  for (let i = 0; i < magazine.length; i++) {
-    const c = magazine[i]
-    mp.set(c, (mp.get(c) || 0) + 1)
+  const map = {}
+  for (let i of magazine) {
+    map[i] = (map[i] || 0) + 1
   }
-
-  for (let i = 0; i < ransomNote.length; i++) {
-    const c = ransomNote[i]
-    if (!mp.has(c) || mp.get(c) < 1) {
-      return false
-    }
-    mp.set(c, mp.get(c) - 1)
+  for (let i of ransomNote) {
+    if (map[i] === undefined) return false
+    if (map[i] === 0) return false
+    map[i]--
   }
   return true
 };

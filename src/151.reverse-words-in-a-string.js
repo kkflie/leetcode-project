@@ -15,46 +15,38 @@
  * @return {string}
  */
 var reverseWords = function(s) {
-  // review
-  const arr = Array.from(s)
-  const n = arr.length
-  trim(arr)
-  // console.log('s2: ', arr)
-  reverse(arr, 0, n - 1)
-  // console.log('s2: ', arr)
-  let start = 0
-  for (let i = 0; i <= n; i++) {
-    if (arr[i] === ' ' || i === n) {
-      reverse(arr, start, i - 1)
-      // console.log('kk', start, i - 1, arr)
-      start = i + 1
+  const arr = s.trim().split('')
+  let slow = fast = 0
+  while (fast < arr.length) {
+    if (fast + 1 < arr.length && arr[fast] === ' ' && arr[fast + 1] === ' ') {
+      fast++
+    } else {
+      arr[slow++] = arr[fast++]
     }
   }
-  // console.log('s2: ', arr)
-  return arr.join('')
+  arr.length = slow
+
   function reverse(arr, start, end) {
-    let right = end
-    for (let i = start; i <= start + ((end - start) >> 1); i++) {
-      // console.log('aa', start + ((end - start) >> 1))
-      const temp = arr[i]
-      arr[i] = arr[right]
-      arr[right] = temp
-      right--
-      // console.log(arr)
+    let i = start, j = end
+    while (i <= j) {
+      [arr[i], arr[j]] = [arr[j], arr[i]]
+      i++
+      j--
     }
   }
-  function trim(arr) {
-    let slow = fast = 0
-    const n = arr.length
-    while (fast < n) {
-      if (arr[fast] === ' ' && (fast === 0|| (arr[fast] === ' ' && arr[fast - 1] === ' '))) {
-        fast++
-      } else {
-        arr[slow++] = arr[fast++]
-      }
+
+  reverse(arr, 0, arr.length - 1)
+  slow = 0
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === ' ') {
+      reverse(arr, slow, i - 1)
+      slow = i + 1
+    } else if (i === arr.length - 1) {
+      reverse(arr, slow, i)
     }
-    arr.length = arr[slow - 1] === ' ' ? slow - 1 : slow
   }
+  const res = arr.join('')
+  return res
 };
 // @lc code=end
 

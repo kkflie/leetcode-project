@@ -16,25 +16,39 @@
  * @return {number[]}
  */
 var maxSlidingWindow = function(nums, k) {
-  // review
-  const st = [], n = nums.length, res = []
-  for (let i = 0; i < n; i++) {
-    if (st.length < 1) {
-      st.push(i)
-      if (i === k - 1) {
-        res.push(nums[st[0]])
+  const len = nums.length
+  class MStack {
+    constructor() {
+      this.st = []
+    }
+
+    push(x) {
+      while (x > this.st[this.st.length - 1]) {
+        this.st.pop()
       }
-      continue
+      this.st.push(x)
     }
-    if (i - k + 1 > st[0]) {
-      st.shift()
+
+    pop(x) {
+      if (this.st[0] === x) {
+        this.st.shift()
+      }
     }
-    while (st.length > 0 && nums[i] > nums[st[st.length - 1]]) {
-      st.pop()
+
+    get(i) {
+      return this.st[i]
     }
-    st.push(i)
-    if (i >= k -1) {
-      res.push(nums[st[0]])
+  }
+  const st = new MStack()
+  let res = []
+  for (let i = 0; i < len; i++) {
+    if (i >= k) {
+      st.pop(nums[i - k])
+    }
+    st.push(nums[i])
+    // console.log(st.st)
+    if (i >= k - 1) {
+      res.push(st.get(0))
     }
   }
   return res

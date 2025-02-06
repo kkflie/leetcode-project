@@ -16,24 +16,20 @@
  * @return {boolean}
  */
 var isAnagram = function(s, t) {
-  if (s.length !== t.length) {
+  if (s.length !== t.length) return false
+  const map = {}
+  for (let i of s) {
+    map[i] = (map[i] || 0) + 1
+  }
+  for (let i of t) {
+    if (map[i]) {
+      map[i]--
+      continue
+    }
     return false
   }
-  const mp = new Map()
-  for (let i = 0; i < s.length; i++) {
-    if (!mp.has(s[i])) {
-      mp.set(s[i], 0)
-    }
-    mp.set(s[i], mp.get(s[i]) + 1)
-  }
-  for (let i = 0; i < t.length; i++) {
-    if (!mp.get(t[i]) || mp.get(t[i]) < 1) {
-      return false
-    } else {
-      mp.set(t[i], mp.get(t[i]) - 1)
-    }
-  }
   return true
+  // console.log(map)
 };
 // @lc code=end
 

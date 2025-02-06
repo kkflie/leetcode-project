@@ -24,19 +24,27 @@
  * @return {boolean}
  */
 var isSubtree = function(root, subRoot) {
-  // review
-  return postOrder(root, subRoot)
-  function postOrder(root, subRoot) {
-    if (!root) return false
-    return isEqual(root, subRoot) ||
-    postOrder(root.left, subRoot) ||
-    postOrder(root.right, subRoot)
+  function compare(p, q) {
+    if (!p && !q) return true
+    if (!p || !q || (p.val !== q.val)) return false
+    return compare(p.left, q.left) && compare(p.right, q.right)
   }
-  function isEqual(n1, n2) {
-    if (!n1 && !n2) return true
-    if (!n2 || !n1 || n1.val !== n2.val) return false
-    return isEqual(n1.left, n2.left) && isEqual(n1.right, n2.right)
+
+  // 递归
+  // if (!root && !subRoot) return true
+  // if (!root) return false
+  // return compare(root, subRoot) || isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot)
+  // 迭代
+  if (!root && !subRoot) return true
+  const st = [root]
+  while(st.length) {
+    const p = st.pop()
+    if (compare(p, subRoot)) return true 
+    if (!p) continue
+    st.push(p.left)
+    st.push(p.right)
   }
+  return false
 };
 // @lc code=end
 

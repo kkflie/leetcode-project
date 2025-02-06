@@ -15,31 +15,26 @@
  * @return {number[][]}
  */
 var permuteUnique = function(nums) {
-  const res = []
-  const path = []
-  const n = nums.length
-  const used = new Array(n).fill(false)
+  const res = [], n = nums.length, path = []
   nums.sort((a, b) => a - b)
-  backTrack(used)
-  function backTrack(used) {
+  const used = new Array(n).fill(false)
+  backTrack(0)
+  return res
+  function backTrack() {
     if (path.length === n) {
-      res.push(path.slice())
+      res.push([...path])
       return
     }
     for (let i = 0; i < n; i++) {
-      if (used[i] ||
-        (i > 0 && nums[i] === nums[i - 1] && !used[i - 1])
-      ) {
-        continue
-      }
-      used[i] = true
+      if (used[i]) continue
+      if (i > 0 && nums[i] === nums[i - 1] && !used[i - 1]) continue
       path.push(nums[i])
-      backTrack(used)
-      path.pop()
+      used[i] = true
+      backTrack()
       used[i] = false
+      path.pop()
     }
   }
-  return res
 };
 // @lc code=end
 

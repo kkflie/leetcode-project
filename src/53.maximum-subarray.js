@@ -16,25 +16,21 @@
  */
 var maxSubArray = function(nums) {
   // 贪心
-  const n = nums.length
-  let res = 0 - Number.MAX_SAFE_INTEGER
-  let sum = 0
-  for (let i = 0; i < n; i++) {
-    sum += nums[i]
-    if (sum > res) {
-      res = sum
-    }
-    if (sum < 0) sum = 0
-  }
-  return res
-  // 动态规划
-  // let max = nums[0]
+  // let res = 0 - Number.MAX_SAFE_INTEGER
+  // let sum = 0
   // const n = nums.length
-  // for (let i = 1; i < n; i++) {
-  //   nums[i] = Math.max(nums[i], nums[i - 1] + nums[i])
-  //   max = Math.max(nums[i], max)
+  // for (let i = 0; i < n; i++) {
+  //   const num = nums[i]
+  //   sum += num
+  //   if (sum > res) {
+  //     res = sum
+  //   }
+  //   if (sum < 0) {
+  //     sum = 0
+  //   }
   // }
-  // return max
+  // return res 
+  // 动态规划
 };
 // @lc code=end
 

@@ -15,23 +15,20 @@
  * @return {number}
  */
 var candy = function(ratings) {
-  // reviews
   const n = ratings.length
-  const arr = new Array(n).fill(1)
+  if (n === 1) return 1
+  const res = new Array(n).fill(1)
   for (let i = 1; i < n; i++) {
     if (ratings[i] > ratings[i - 1]) {
-      arr[i] = arr[i - 1] + 1
+      res[i] = res[i - 1] + 1
     }
   }
   for (let i = n - 2; i >= 0; i--) {
     if (ratings[i] > ratings[i + 1]) {
-      if (arr[i + 1]  + 1> arr[i]) {
-        arr[i] = arr[i + 1] + 1
-      }
+      res[i] = Math.max(res[i], res[i + 1] + 1)
     }
   }
-  // console.log(arr)
-  return arr.reduce((a, b) => a + b)
+  return res.reduce((cur, pre) => cur + pre)
 };
 // @lc code=end
 

@@ -15,6 +15,7 @@
  * @return {number}
  */
 var wiggleMaxLength = function(nums) {
+  // 动态规划
   const n = nums.length
   const dp = new Array(n).fill(undefined)
     .map(() => new Array(2).fill(0))
@@ -22,31 +23,31 @@ var wiggleMaxLength = function(nums) {
   for (let i = 1; i < n; i++) {
     dp[i][0] = dp[i][1] = 1
     for (let j = 0; j < i; j++) {
-      if (nums[j] > nums[i]) {
-        dp[i][1] = Math.max(dp[i][1], dp[j][0] + 1)
+      if (nums[j] < nums[i]) {
+        dp[i][0] = Math.max(dp[i][0], dp[j][1] + 1)
       }
     }
     for (let j = 0; j < i; j++) {
-      if (nums[j] < nums[i]) {
-        dp[i][0] = Math.max(dp[i][0], dp[j][1] + 1)
+      if (nums[j] > nums[i]) {
+        dp[i][1] = Math.max(dp[i][1], dp[j][0] + 1)
       }
     }
   }
   return Math.max(dp[n - 1][0], dp[n - 1][1])
   // 贪心
-  // const arr = []
-  // let count= 0
-  // for (let i = 1; i < nums.length; i++) {
-  //   const res = nums[i] - nums[i - 1]
+  // if (nums.length === 1) return 1
+  // let res = 0, pre = 0
+  // const n = nums.length
+  // for (let i = 1; i < n; i++) {
+  //   const diff = nums[i] - nums[i - 1]
   //   if (
-  //     res === 0 ||
-  //     (arr.length &&
-  //      arr[0] * res > 0)
+  //     (diff === 0) ||
+  //     (pre !== 0 && pre * diff > 0)
   //   ) continue
-  //   arr[0] = res
-  //   count++
+  //   pre = diff
+  //   res++
   // }
-  // return count < 2 && arr[0] === 0 ? 1 : count + 1
+  // return res + 1
 };
 // @lc code=end
 

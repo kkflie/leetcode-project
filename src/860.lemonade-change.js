@@ -15,31 +15,26 @@
  * @return {boolean}
  */
 var lemonadeChange = function(bills) {
-  if (bills[0] > 5) return false
-  let coin5 = 0, coin10 = 0
+  let coin5 = 0
+  let coin10 = 0
   for (let i = 0; i < bills.length; i++) {
     let coin = bills[i]
-    switch (coin) {
-      case 10: 
-        coin10++
-        break
-      case 5: 
-        coin5++
-        break
-    }
-    if (coin === 5) continue
-    while (coin > 5) {
-      while (coin > 10 && coin10 > 0) {
-        coin -= 10
+    if (coin === 5) coin5++
+    else if (coin === 10) coin10++
+
+    if (coin === 10) {
+      if (coin5 < 1) return false
+      coin5--
+    } else if (coin === 20) {
+      if (coin && coin10 > 0) {
         coin10--
+        coin -= 10
       }
       while (coin > 5 && coin5 > 0) {
-        coin -= 5
         coin5--
+        coin -= 5
       }
-      if (coin > 5) {
-        return false
-      }
+      if (coin > 5) return false
     }
   }
   return true

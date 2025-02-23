@@ -16,24 +16,29 @@
  * @return {number}
  */
 var maxValueOfCoins = function(piles, k) {
-  const f = new Array(k + 1).fill(-1)
-  f[0] = 0
-  for (const pile of piles) {
-    for (let i = k; i >= 0; i--) {
-      let value = 0
-      for (let t = 1; t <= pile.length; t++) {
-        value += pile[t - 1]
-        if (i >= t && f[i - t] !== -1) {
-          f[i] = Math.max(f[i], f[i - t] + value)
-        }
+  let f = new Array(k + 1).fill(-1);
+  f[0] = 0;
+  for (let pile of piles) {
+      for (let i = k; i > 0; i--) {
+          let value = 0;
+          for (let t = 1; t <= pile.length; t++) {
+              value += pile[t - 1];
+              if (i >= t && f[i - t] !== -1) {
+                  f[i] = Math.max(f[i], f[i - t] + value);
+              }
+          }
       }
-    }
   }
-  // console.log(f)
-  return f[k]  
+  return f[k];
 };
 // @lc code=end
-
+const res = maxValueOfCoins([
+  [37,88],
+  [51,64,65,20,95,30,26],
+  [9,62,20],
+  [44]
+], 9)
+console.log(res)
 
 
 /*

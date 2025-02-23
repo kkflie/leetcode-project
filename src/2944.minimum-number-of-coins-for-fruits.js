@@ -15,25 +15,26 @@
  * @return {number}
  */
 var minimumCoins = function(prices) {
-  const n = prices.length;
-    const queue = [];
-    queue.push([n, 0]);
-    console.log('init ', queue)
-    for (let i = n - 1; i >= 0; i--) {
-      console.log('第', i, '次循环')
-      while (queue[queue.length - 1][0] > 2 * (i + 1)) {
-          queue.pop();
-          console.log('queue ', queue)
-      }
-      let cur = queue[queue.length - 1][1] + prices[i];
-      while (queue[0][1] >= cur) {
-          queue.shift();
-          console.log('shift ', queue)
-      }
-      queue.unshift([i, cur]);
-      console.log('unshift ', queue)
+  const memo = new Map();
+
+  const dp = (index) => {
+    if (2 * index + 2 >= prices.length) {
+      return prices[index];
     }
-    return queue[0][1];
+    if (!memo.has(index)) {
+      let minValue = Infinity;
+      for (let i = index + 1; i <= 2 * index + 2; i++) {
+        minValue = Math.min(minValue, dp(i));
+        console.log('min', minValue)
+      }
+      const val = prices[index] + minValue
+      console.log('val', index, val)
+      memo.set(index, val);
+    }
+    return memo.get(index);
+  };
+
+  return dp(0);
 };
 // @lc code=end
 

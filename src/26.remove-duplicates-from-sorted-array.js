@@ -11,20 +11,17 @@
  * @return {number}
  */
 var removeDuplicates = function(nums) {
-  if (nums.length < 2) {
-    return nums.length
-  }
-  let len = 0
-  let tail = nums[nums.length - 1]
-  for (let i = 0; i < nums.length; i++) {
-    if (nums[len] !== nums[i]) {
-      nums[++len] = nums[i]
-      if (nums[len] === tail && nums[i + 1] === tail) {
-        break
-      }
+  if (nums.length < 2) return nums.length
+  const n = nums.length
+  let i = 0, j = 1
+  while (j < n) {
+    if (nums[i] === nums[j]) {
+      j++
+    } else {
+      nums[++i] = nums[j++]
     }
   }
-  return len + 1
+  return i + 1
 };
 module.exports = removeDuplicates 
 // @lc code=end

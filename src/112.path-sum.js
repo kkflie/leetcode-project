@@ -24,13 +24,16 @@
  * @return {boolean}
  */
 var hasPathSum = function(root, targetSum) {
-  return traverse(root, 0)
-  function traverse(root, sum) {
+  if (!root) return false
+  function getSum(root, sum) {
     if (!root) return false
-    return !root.left && !root.right && (sum + root.val === targetSum) ||
-    traverse(root.left, sum + root.val) ||
-    traverse(root.right, sum + root.val)
+    if (!root.left && !root.right) {
+      return sum + root.val === targetSum
+    }
+    return getSum(root.left, sum + root.val) || getSum(root.right, sum + root.val)
   }
+
+  return getSum(root, 0)
 };
 // @lc code=end
 

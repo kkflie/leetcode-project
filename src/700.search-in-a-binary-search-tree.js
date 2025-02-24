@@ -24,9 +24,9 @@
  * @return {TreeNode}
  */
 var searchBST = function(root, val) {
-  if (!root || val === undefined || val === null) return null
+  if (!root) return root
   if (root.val === val) return root
-  return searchBST(root.left, val) || searchBST(root.right, val) || null
+  return searchBST(root.left, val) || searchBST(root.right, val)
 };
 // @lc code=end
 

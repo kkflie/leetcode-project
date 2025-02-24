@@ -17,13 +17,14 @@
  */
 var search = function(nums, target) {
   let i = 0, j = nums.length
-  while(i < j) {
+  while (i < j) {
     const mid = (i + j) >> 1
-    if (nums[mid] === target) return mid
-    else if (nums[mid] > target) {
-      j = mid
-    } else {
+    const num = nums[mid]
+    if (num === target) return mid
+    else if (num < target) {
       i = mid + 1
+    } else {
+      j = mid
     }
   }
   return -1

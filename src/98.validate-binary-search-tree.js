@@ -23,16 +23,14 @@
  * @return {boolean}
  */
 var isValidBST = function(root) {
-  // review
-  if (!root) return false
   const res = []
-  function traverse(root) {
+  function traversal(root) {
     if (!root) return
-    traverse(root.left)
+    traversal(root.left)
     res.push(root.val)
-    traverse(root.right)
+    traversal(root.right)
   }
-  traverse(root)
+  traversal(root)
   for (let i = 1; i < res.length; i++) {
     if (res[i] <= res[i - 1]) return false
   }

@@ -15,26 +15,15 @@
  * @return {number}
  */
 var mySqrt = function(x) {
-  let left = 0
-  let right = x
-  let max = -1
-  let maxIdx = -1 
-  while (left <= right) {
-    const mid = Math.floor((right - left) / 2) + left
-    const num = mid * mid
-    if (num === x) {
-      return mid
-    } else if (num > x) {
-      right = mid - 1
-    } else {
-      if (max < num) {
-        max = num
-        maxIdx = mid
-      }
-      left = mid + 1
-    }
+  let i = 0, j = x, mid, res = -1
+  while (i <= j) {
+    mid = (i + j) >> 1
+    if (mid * mid <= x) {
+      res = mid
+      i = mid + 1
+    } else j = mid - 1
   }
-  return maxIdx
+  return res
 };
 // @lc code=end
 

@@ -24,18 +24,17 @@
  * @return {TreeNode}
  */
 var lowestCommonAncestor = function(root, p, q) {
-  //review
-  function traverse(root, p, q) {
-    if (!root || p === root || q === root) {
-      return root
-    }
-    const left = traverse(root.left, p, q)
-    const right = traverse(root.right, p, q)
-    if (left && right) return root
-    if (!left) return right
-    return left
-  } 
-  return traverse(root, p , q)
+  function findNode(root, p, q) {
+    if (!root || root === p || root === q) return root
+    const n1 = findNode(root.left, p, q)
+    const n2 = findNode(root.right, p, q)
+    if (n1 && n2) return root
+    return n2 || n1
+  }
+  return findNode(root, p, q)
+  // if (!n1) return n2
+  // if (!n2) return n1
+  // return root
 };
 // @lc code=end
 

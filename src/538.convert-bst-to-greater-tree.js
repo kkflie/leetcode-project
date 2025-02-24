@@ -23,17 +23,36 @@
  * @return {TreeNode}
  */
 var convertBST = function(root) {
-  // review
-  let pre = 0
-  function reverseInOrder(cur) {
+  // 递归
+  // let pre
+  // function traversal(root) {
+  //   if (!root) return
+  //   traversal(root.right)
+  //   if (pre) {
+  //     root.val += pre.val
+  //   }
+  //   pre = root
+  //   traversal(root.left)
+  // }
+  // traversal(root)
+  // return root
+
+  // 迭代
+  let pre, cur = root
+  const st = []
+  while (cur || st.length) {
     if (cur) {
-      reverseInOrder(cur.right)
-      cur.val += pre
-      pre = cur.val
-      reverseInOrder(cur.left)
+      st.push(cur)
+      cur = cur.right
+    } else {
+      cur = st.pop()
+      if (pre) {
+        cur.val += pre.val
+      }
+      pre = cur 
+      cur = cur.left
     }
   }
-  reverseInOrder(root)
   return root
 };
 // @lc code=end

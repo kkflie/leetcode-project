@@ -16,22 +16,25 @@
  * @return {number[]}
  */
 var searchRange = function(nums, target) {
-  if (nums[nums.length-1] < target) return[-1,-1]
-  let start = -1, end = -1
-  let i = 0
-  const n = nums.length
-  while (i < n) {
-    if (start < 0 && nums[i] === target) {
-      start = i
-    }
-    if (nums[i] > target) {
-      if (start < 0) return [-1, -1]
-      return [start, i - 1]
-    }
-    i++
+  if (!nums.length || target < nums[0] || target > nums[nums.length - 1]) return [-1, -1]
+  let i = 0, j = nums.length
+  let mid
+  while (i < j) {
+    mid = (i + j) >> 1
+    const num = nums[mid]
+    if (num === target) break
+    else if (num > target) j = mid
+    else i = mid + 1
   }
-  if (start>=0)return[start,n-1]
-  return [start,end]
+  if (i >= j) return [-1, -1]
+  i = j = mid
+  while (nums[i] === target) {
+    i--
+  }
+  while (nums[j] === target) {
+    j++
+  }
+  return [i + 1, j - 1]
 };
 // @lc code=end
 

@@ -25,25 +25,30 @@
 var minDepth = function(root) {
   if (!root) return 0
   // 递归
-  // if (!root.left && !root.right) return 1
-  // if (!root.left) return 1 + minDepth(root.right)
-  // if (!root.right) return 1 + minDepth(root.left)
-  // return 1 + Math.min(minDepth(root.left), minDepth(root.right))
+  const leftDepth = minDepth(root.left)
+  const rightDepth = minDepth(root.right)
+  if (!root.left) {
+    return 1 + rightDepth
+  }
+  if (!root.right) {
+    return 1 + leftDepth
+  }
+  return 1 + Math.min(leftDepth, rightDepth)
 
   // 迭代
-  const q = [root]
-  let depth = 0
-  while(q.length) {
-    depth++
-    const len = q.length
-    for (let i = 0; i < len; i++) {
-      const p = q.shift()
-      if (!p.left && !p.right) return depth
-      if (p.left) q.push(p.left) 
-      if (p.right) q.push(p.right) 
-    }
-  }
-  return 1
+  // const q = [root]
+  // let depth = 0
+  // while(q.length) {
+  //   depth++
+  //   const len = q.length
+  //   for (let i = 0; i < len; i++) {
+  //     const p = q.shift()
+  //     if (!p.left && !p.right) return depth
+  //     if (p.left) q.push(p.left) 
+  //     if (p.right) q.push(p.right) 
+  //   }
+  // }
+  // return 1
 };
 // @lc code=end
 

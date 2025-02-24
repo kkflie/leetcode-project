@@ -1,0 +1,13 @@
+<script>
+  fetch('http://localhost:3000', {
+    headers: {
+      'custom-head': true
+    }
+  })
+    .then(res => {
+      return res.json()
+    })
+    .then(data => {
+      console.log('data', data)
+    })
+</script>

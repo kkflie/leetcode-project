@@ -16,17 +16,16 @@
  * @return {number}
  */
 var minSubArrayLen = function(target, nums) {
-  let slow = fast = 0
-  let sum = 0
-  let minLen = Infinity
-  while (fast < nums.length) {
-    sum += nums[fast++]
-    while (sum >= target) {
-      minLen = Math.min(minLen, fast - slow)
-      sum -= nums[slow++]
+  const n = nums.length
+  let i = j = sum = 0, minLen = Number.MAX_SAFE_INTEGER
+  while (j < n) {
+    sum += nums[j++]
+    while(sum >= target) {
+      minLen = Math.min(minLen, j - i)
+      sum -= nums[i++]
     }
   }
-  return minLen === Infinity ? 0 : minLen
+  return minLen === Number.MAX_SAFE_INTEGER ? 0 : minLen
 };
 // @lc code=end
 

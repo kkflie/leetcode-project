@@ -23,9 +23,9 @@
  * @return {number}
  */
 var maxDepth = function(root) {
-  if (!root) return 0
   // 递归
-  // return 1 + Math.max(maxDepth(root.left), maxDepth(root.right))
+  if (!root) return 0
+  return 1 + Math.max(maxDepth(root.left), maxDepth(root.right))
   // 递归 前序遍历
   // let maxDepth = 1
   // getDepth(root, maxDepth)

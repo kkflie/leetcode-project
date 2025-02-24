@@ -23,16 +23,11 @@
  * @return {TreeNode}
  */
 var sortedArrayToBST = function(nums) {
-  // review
-  function build(arr, left, right) {
-    if (left > right) return null
-    const mid = Math.floor(left + (right - left) / 2)
-    const root = new TreeNode(nums[mid])
-    root.left = build(arr, left, mid - 1)
-    root.right = build(arr, mid + 1, right)
-    return root
-  }
-  const root = build(nums, 0, nums.length - 1)
+  if (!nums.length) return null
+  const idx = nums.length >> 1
+  const root = new TreeNode(nums[idx])
+  root.left = sortedArrayToBST(nums.slice(0, idx))
+  root.right = sortedArrayToBST(nums.slice(idx + 1))
   return root
 };
 // @lc code=end

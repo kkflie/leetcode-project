@@ -23,6 +23,10 @@
  * @return {number[]}
  */
 var postorderTraversal = function(root) {
+  const res = []
+  traversal(root)
+  return res
+  
   // 递归
   //  function traversal(root) {
   //   if (!root) return
@@ -47,26 +51,22 @@ var postorderTraversal = function(root) {
   // }
 
   // 迭代2
-  function traversal(root) {
-    if (!root) return
-    const st = [root]
-    while (st.length) {
-      let node = st.pop()
-      if (node) {
-        st.push(node)
-        st.push(null)
-        if (node.right) st.push(node.right)
-        if (node.left) st.push(node.left)
-      } else {
-        node = st.pop()
-        res.push(node.val)
-      }
-    }
-  }
-  
-  const res = []
-  traversal(root)
-  return res
+  // function taversal(root) {
+  //   if (!root) return
+  //   const st = [root]
+  //   while (st.length) {
+  //     let node = st.pop()
+  //     if (node) {
+  //       st.push(node)
+  //       st.push(null)
+  //       if (node.right) st.push(node.right)
+  //       if (node.left) st.push(node.left)
+  //     } else {
+  //       node = st.pop()
+  //       res.push(node.val)
+  //     }
+  //   }
+  // }
 };
 // @lc code=end
 

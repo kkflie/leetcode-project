@@ -28,9 +28,9 @@ var levelOrder = function(root) {
   const q = [root]
   const res = []
   while (q.length) {
-    const len = q.length
+    const n = q.length
     const path = []
-    for (let i = 0; i < len; i++) {
+    for (let i = 0; i < n; i++) {
       const node = q.shift()
       path.push(node.val)
       if (node.left) q.push(node.left)

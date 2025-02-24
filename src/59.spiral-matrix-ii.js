@@ -16,34 +16,28 @@
  */
 var generateMatrix = function(n) {
   let i = j = 0
-  let mid = loop = n>>1
-  // let loop = 1
-  let res = new Array(n).fill(undefined).map(() => new Array(n))
-  let count = 1
   let offset = 0
-  while (loop--) {
-    i = j = offset
-    while (j < n - offset - 1) {
+  let count = 1
+  const res = new Array(n).fill(undefined)
+    .map(() => new Array(n))
+  const loop = Math.floor(n / 2)
+  while (offset < loop) {
+    while(j < n - 1 - offset) {
       res[i][j++] = count++
     }
-    // console.log(res)
-    while (i < n - offset - 1) {
+    while(i < n - 1 - offset) {
       res[i++][j] = count++
     }
-    // console.log(res)
-    while (j > offset) {
+    while(j > offset) {
       res[i][j--] = count++
     }
-    // console.log(res)
     while(i > offset) {
       res[i--][j] = count++
     }
-    // console.log(res)
     offset++
+    i = j = offset
   }
-  if (n%2) {
-    res[mid][mid]=count
-  }
+  if (n % 2) res[loop][loop] = count
   return res
 };
 // @lc code=end

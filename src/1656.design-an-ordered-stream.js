@@ -25,14 +25,13 @@ var OrderedStream = function(n) {
  */
 OrderedStream.prototype.insert = function(idKey, value) {
   this.arr[idKey] = value 
-  const res = []
+  const start = this.ptr
   for (let i = this.ptr; i < this.arr.length; i++) {
     if (this.arr[i]) {
-      res.push(this.arr[i])
       this.ptr++
     } else break
   }
-  return res
+  return this.arr.slice(start, this.ptr)
 };
 
 
